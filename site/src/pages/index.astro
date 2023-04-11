@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Picture } from '@astrojs/image/components';
+---
+
+<Layout title="Welcome to Cool Game 3">
+	<main>
+    <Picture  class="mx-auto" src="/logo.png" widths={[200, 400, 800]} aspectRatio="16:9" sizes="(max-width: 800px) 100vw, 800px" alt="Cool Game 3 Logotype" />
+	</main>
+</Layout>
