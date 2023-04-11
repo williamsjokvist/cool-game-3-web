@@ -1,10 +1,50 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Picture } from '@astrojs/image/components';
+import Icon from 'astro-icon'
 ---
 
 <Layout title="Welcome to Cool Game 3">
 	<main>
-    <Picture  class="mx-auto" src="/logo.png" widths={[200, 400, 800]} aspectRatio="16:9" sizes="(max-width: 800px) 100vw, 800px" alt="Cool Game 3 Logotype" />
-	</main>
+    <Picture class="mx-auto logo" src="/logo.png" widths={[200, 400, 800]} aspectRatio="16:9" sizes="(max-width: 800px) 100vw, 800px" alt="Cool Game 3 Logotype" />
+    <!--<div class="mx-auto max-w-[400px]">
+      <a href='/register' class="flex items-center justify-center gap-3 text-xl register-btn"><Icon name='ri:quill-pen-fill' class="w-9 h-9 relative bottom-[2px]"/></a>
+    </div>-->
+  </main>
 </Layout>
+
+<style>
+  .logo {
+    position: relative;
+    animation: MoveUpDown 4s linear infinite;
+    animation-timing-function: ease-in-out;
+  }
+
+  .register-btn {
+    background: linear-gradient(180deg,#40c4f0 0%,#046fa5 100%);
+    width: 60px;
+    height: 60px;
+    padding: 6px;
+    text-shadow: 0px 0px 6px #0b4968;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: inset 0px -4px 1px #024874;
+  }
+
+  .register-btn svg {
+    filter: drop-shadow(0px 0px 2px #045b93);
+  }
+
+  .register-btn svg path {
+    color: #dde9ee!important;
+  }
+
+  @keyframes MoveUpDown {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(25px);
+    }
+  }
+</style>
