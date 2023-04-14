@@ -38,3 +38,7 @@ func Run(addr ...string) *gin.Engine {
 	router.Run(addr...)
 	return router
 }
+
+func main() {
+	Run()
+}
