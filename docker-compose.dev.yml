@@ -4,28 +4,30 @@ services:
   api:
     container_name: cg3_web_api
     build: 
-      context: ./server
+      context: server
       dockerfile: dev.Dockerfile
     env_file: .env
     restart: unless-stopped
     ports:
-      - 8080:8080
+      - 8081:8081
     volumes:
-      - ./server:/app
+      - ./server:/cg3-web-server
     environment:
-      CHOKIDAR_USE_POLLING: "true"
+      CHOKIDAR_USE_POLLING: false
   
   astro:
     container_name: cg3_site
     build: 
-      context: ./site
+      context: site
       dockerfile: dev.Dockerfile
     env_file: .env
     restart: unless-stopped
     ports:
       - 3000:3000
     volumes:
-      - ./site:/app
-      - ./site/src:/app/src
+      - ./site/public:/cg3-site/public
+      - ./site/src:/cg3-site/src
+      - ./site/tsconfig.json:/cg3-site/tsconfig.json
+      - ./site/astro.config.mjs:/cg3-site/astro.config.mjs
     environment:
-      CHOKIDAR_USE_POLLING: "true"
+      CHOKIDAR_USE_POLLING: false

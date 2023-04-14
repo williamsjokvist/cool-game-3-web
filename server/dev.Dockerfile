@@ -1,6 +1,6 @@
 FROM golang:1.20-alpine
 
-WORKDIR /app
+WORKDIR /cg3-web-server
 
 EXPOSE 8080
 
