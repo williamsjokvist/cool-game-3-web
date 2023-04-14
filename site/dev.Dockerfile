@@ -1,11 +1,12 @@
 FROM node:alpine
 
-COPY package.json ./app
-COPY tsconfig.json ./app
-COPY src ./app/src
+EXPOSE 3000
 
 WORKDIR /app
 
-RUN npm i
+COPY . ./app
+
+RUN npm install --loglevel verbose
+
 
 CMD ["npm", "run", "dev", "--host 0.0.0.0"]
