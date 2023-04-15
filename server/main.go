@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -37,4 +38,8 @@ func Run(addr ...string) *gin.Engine {
 	router := Setup()
 	router.Run(addr...)
 	return router
+}
+
+func main() {
+	Run()
 }
