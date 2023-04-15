@@ -1,0 +1,59 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Picture } from "@astrojs/image/components";
+import Icon from "astro-icon";
+import { getCollection, getEntryBySlug } from "astro:content";
+// Get all entries from a collection. Requires the name of the collection as an argument.
+const patchNotes = await getCollection("patch-notes");
+---
+
+<Layout title="Cool Game 3 Patch Notes">
+  <main class='pb-24'>
+    <a href="/" aria-label="Go home">
+      <Picture
+        class="mx-auto logo"
+        src="/logo.png"
+        widths={[200, 400, 800]}
+        aspectRatio="16:9"
+        sizes="(max-width: 800px) 100vw, 800px"
+        alt="Cool Game 3 Logotype"
+      />
+    </a>
+    <section class="text-white">
+      <ul>
+        {
+          patchNotes.map(async (patchNote) => {
+            const { Content } = await patchNote.render();
+            return (
+              <article class="prose lg:prose-xl prose-xl max-w-2xl mx-auto">
+                <Content />
+              </article>
+            );
+          })
+        }
+      </ul>
+    </section>
+  </main>
+</Layout>
+
+<style is:global>
+  .prose ul {
+    list-style: disc;
+    margin-left: 30px;
+  }
+
+  .prose li {
+    margin-bottom: 4px;
+  }
+
+  .prose h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: bold;
+  }
+  .prose h2 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    margin: 20px 0;
+  }
+</style>

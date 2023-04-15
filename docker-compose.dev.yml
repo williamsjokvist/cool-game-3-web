@@ -14,6 +14,7 @@ services:
       - ./server:/cg3-web-server
     environment:
       CHOKIDAR_USE_POLLING: false
+      PORT: 8081
   
   astro:
     container_name: cg3_site
@@ -31,3 +32,4 @@ services:
       - ./site/astro.config.mjs:/cg3-site/astro.config.mjs
     environment:
       CHOKIDAR_USE_POLLING: false
+      PORT: 3000
