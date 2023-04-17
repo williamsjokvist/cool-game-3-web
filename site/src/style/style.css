@@ -39,7 +39,7 @@ code {
 }
 
 #notice {
-  animation: marquee 35s linear infinite;
+  animation: marquee 50s linear infinite;
 }
 
 @keyframes marquee {
