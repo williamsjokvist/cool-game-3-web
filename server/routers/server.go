@@ -67,6 +67,16 @@ func CreateServer() *Server {
 	}
 }
 
+func (s *Server) getNotice(ctx *gin.Context) {
+	noticeFile, err := ioutil.ReadFile("./db/notice.txt")
+	if err != nil {
+		ctx.JSON(http.StatusOK, "")
+		return
+	}
+
+	ctx.JSON(http.StatusOK, string(noticeFile))
+}
+
 func (s *Server) helloWorld(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, "Cool Game 3 Web API")
 }
@@ -75,6 +85,7 @@ func (s *Server) Run() {
 	routers := s.router.Group("/")
 
 	routers.GET("/", s.helloWorld)
+	routers.GET("/notice", s.getNotice)
 	s.AttachAccountRoutes(routers)
 	s.AttachCharacterRoutes(routers)
 

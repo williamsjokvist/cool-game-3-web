@@ -37,6 +37,8 @@ services:
       PORT: 3000
     networks:
       - cg3-network
+    depends_on:
+      - cg3_web_api
 
 networks:
   cg3-network:
