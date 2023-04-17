@@ -10,3 +10,15 @@
   font-weight: bold;
   font-style: normal;
 }
+@font-face {
+  font-family: "Pixelated Arial";
+  src: url("/fonts/arial.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pixelated Arial";
+  src: url("/fonts/arial_bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
