@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/GreenSoap/cool-game-3-web/data"
+	data "github.com/GreenSoap/cool-game-3-web/data_access"
 	"github.com/GreenSoap/cool-game-3-web/models"
 	"github.com/gin-gonic/gin"
 )
@@ -22,11 +22,37 @@ func (s *Server) getOnlineCharacters(ctx *gin.Context) {
 
 	characters := []models.Character{}
 	err := s.db.Select(&characters,
-		`SELECT name, level, exp, str, dex, luk,
-		loggedIn, siteJobRank, siteJobRank, siteOddJobRank, rank, rankMove, jobRank, 
-		hp, mp, characters.int, map, maxmp, maxhp, meso, job, totalPlayTime, rank, 
-		hair, face, skincolor, gender, createdate
-		FROM characters WHERE loggedIn = 1 AND hideFromRankings = 0 ORDER BY totalPlayTime DESC`)
+		`SELECT 
+		name, 
+		level, 
+		exp, 
+		str, 
+		dex, 
+		luk, 
+		fame,
+		loggedIn, 
+		siteJobRank, 
+		siteJobRank, 
+		siteOddJobRank,
+		rank, 
+		rankMove, 
+		jobRank, 
+		hp, 
+		mp, 
+		characters.int, 
+		map, 
+		maxmp, 
+		maxhp, 
+		meso, 
+		job, 
+		totalPlayTime, 
+		rank, 
+		hair, 
+		face, 
+		skincolor, 
+		gender, 
+		createdate
+	FROM characters WHERE loggedIn = 1 AND hideFromRankings = 0 ORDER BY totalPlayTime DESC`)
 	if err != nil {
 		fmt.Println(err)
 		ctx.JSON(http.StatusInternalServerError, "Error fetching online characters")
@@ -47,10 +73,37 @@ func (s *Server) getOnlineCharacters(ctx *gin.Context) {
 func (s *Server) getCharacters(ctx *gin.Context) {
 	characters := []models.Character{}
 
-	err := s.db.Select(&characters, `SELECT name, level, exp, str, dex, luk,
-	loggedIn, siteJobRank, siteJobRank, siteOddJobRank, rank, rankMove, jobRank, 
-	hp, mp, characters.int, map, maxmp, maxhp, meso, job, totalPlayTime, rank, 
-	hair, face, skincolor, gender, createdate
+	err := s.db.Select(&characters,
+		`SELECT
+		name, 
+		level, 
+		exp, 
+		str, 
+		dex, 
+		luk, 
+		fame,
+		loggedIn, 
+		siteJobRank, 
+		siteJobRank, 
+		siteOddJobRank,
+		rank, 
+		rankMove, 
+		jobRank, 
+		hp, 
+		mp, 
+		characters.int, 
+		map, 
+		maxmp, 
+		maxhp, 
+		meso, 
+		job, 
+		totalPlayTime, 
+		rank, 
+		hair, 
+		face, 
+		skincolor, 
+		gender, 
+		createdate
 	FROM characters WHERE hideFromRankings = 0 ORDER BY rank ASC`)
 
 	if err != nil {

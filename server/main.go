@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/GreenSoap/cool-game-3-web/data"
+	data "github.com/GreenSoap/cool-game-3-web/data_access"
 	"github.com/GreenSoap/cool-game-3-web/routers"
 	"github.com/gin-gonic/gin"
 )

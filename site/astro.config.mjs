@@ -10,7 +10,7 @@ export default defineConfig({
   integrations: [image(), tailwind()],
   server: {
     host: true,
-    port: 3001
+    port: import.meta.env.PORT
   },
   adapter: vercel()
 });
