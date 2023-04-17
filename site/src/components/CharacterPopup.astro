@@ -1,7 +1,145 @@
 ---
+import { CharacterModel } from "../types/character";
 
+const { character } = Astro.props;
 const {
-  character
-} = Astro.props
+  Name,
+  Level,
+  JobName,
+  StreetName,
+  MapName,
+  Exp,
+  ExpRequired,
+  Str,
+  Luk,
+  Dex,
+  Int,
+  HP,
+  MP,
+  MaxHP,
+  MaxMP,
+  Fame,
+  Rank,
+  CreateDate,
+  TotalPlayTime,
+} = character as CharacterModel;
 
+const expPercentage = ((Exp / ExpRequired) * 100).toFixed(2) + "%";
+const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
 ---
+
+<section
+  class="min-w-[320px] text-center group-hover:block hidden bg-[#e4e1d4] text-black border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur absolute z-50 top-[-240px] left-[150px] px-4 py-2 rounded-lg"
+>
+  <span
+    class="bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white"
+    >{Name}</span
+  ><br /><br />
+  <div class="flex items-center justify-center gap-2 text-sm">
+    {JobName}
+    <span>|</span>
+    <span class="font-bold">LV.</span>
+    <span>
+      {
+        Level.toString()
+          .split("")
+          .map((num: string) => <span class={`level-no level-no-${num}`} />)
+      }
+    </span>
+  </div>
+  <br />
+  <span class="block text-xs pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
+    >{StreetName} - {MapName}</span
+  >
+
+  <div class="flex items-center justify-between w-full text-sm">
+    <span class="w-full text-left">
+      HP
+      <span class="ml-2 text-[#95c634]">
+        [<span class="text-black">{HP}/{MaxHP}</span>]
+      </span>
+    </span>
+    <div
+      class="max-w-[130px] w-full h-3 bg-slate-700 rounded-md overflow-hidden"
+    >
+      <div
+        class="bg-red-500 h-3"
+        style={`width: ${Math.floor((HP / MaxHP) * 100)}%`}
+      >
+      </div>
+    </div>
+  </div>
+  <div class="mt-2 flex items-center justify-between w-full text-sm">
+    <span class="flex items-center">
+      MP
+      <span class="ml-2 text-[#95c634]">
+        [<span class="text-black">{MP}/{MaxMP}</span>]
+      </span>
+    </span>
+    <div
+      class="max-w-[130px] w-full h-3 bg-slate-700 rounded-md overflow-hidden"
+    >
+      <div
+        class="bg-blue-500 h-3"
+        style={`width: ${Math.floor((MP / MaxMP) * 100)}%`}
+      >
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="mt-2 flex items-center justify-between w-full text-sm pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
+  >
+    <span class="flex items-center">
+      EXP
+      <span class="ml-2 text-[#95c634]">
+        [<span class="text-black">{expPercentage}</span>]
+      </span>
+    </span>
+    <div
+      class="max-w-[130px] w-full h-3 bg-slate-700 rounded-md overflow-hidden"
+    >
+      <div class="bg-yellow-500 h-3" style={`width: ${expPercentage}`}></div>
+    </div>
+  </div>
+  <dl
+    class="font-sans pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
+  >
+    <div class="flex gap-8 w-full justify-between mb-1">
+      <div class="flex gap-4 w-full justify-between px-2">
+        <dt class="text-[#633c2f]">RANK</dt>
+        <dd>#{Rank}</dd>
+      </div>
+      <div class="flex gap-4 w-full justify-between px-2">
+        <dt class="text-[#633c2f]">FAME</dt>
+        <dd>{Fame}</dd>
+      </div>
+    </div>
+    <div class="flex gap-8 w-full justify-between mb-1">
+      <div class="flex gap-4 w-full justify-between px-2">
+        <dt class="text-[#633c2f]">STR</dt>
+        <dd>{Str}</dd>
+      </div>
+      <div class="flex gap-4 w-full justify-between px-2">
+        <dt class="text-[#633c2f]">DEX</dt>
+        <dd>{Dex}</dd>
+      </div>
+    </div>
+    <div class="flex gap-8 w-full justify-between">
+      <div class="flex gap-4 w-full justify-between px-2">
+        <dt class="text-[#633c2f]">LUK</dt>
+        <dd>{Luk}</dd>
+      </div>
+      <div class="flex gap-4 w-full justify-between px-2">
+        <dt class="text-[#633c2f]">INT</dt>
+        <dd>{Int}</dd>
+      </div>
+    </div>
+  </dl>
+  <span class="text-xs block mb-2"
+    >Created on: <time datetime={CreateDate}>{CreateDate.slice(0, 10)}</time
+    ></span
+  >
+  <span class="text-xs block mb-2">Total Play Time: {playTimeHrs + ' hrs'}</span>
+
+</section>
