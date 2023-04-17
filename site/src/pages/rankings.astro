@@ -41,9 +41,9 @@ const characters = await getRankings();
                 <th class="text-left font-bold px-4">EXP</th>
                 <th class="text-left font-bold px-4">Fame</th>
                 <th class="text-left font-bold px-4">Meso</th>
-                <th class="text-left font-bold px-4">Map</th>
                 <th class="text-right font-bold px-4">Play Time</th>
-                <th class="text-left font-bold px-4">Date of Creation</th>
+                {/*<th class="text-left font-bold px-4">Map</th>
+              <th class="text-left font-bold px-4">Date of Creation</th>*/}
               </tr>
             </thead>
             <tbody>
@@ -76,21 +76,26 @@ const characters = await getRankings();
                 return (
                   <tr class="even:bg-[rgba(255,255,255,0.05)]">
                     <td class="text-right px-4 py-2">#{Rank}</td>
-                    <td class="text-left px-4 py-2">{Name}</td>
-                    <td class="text-left px-4 py-2">{Level}</td>
+                    <td class="text-left px-4 py-2 text-base"
+                      style='font-family:"Pixelated Arial"'
+                    >{Name}</td>
+                    <td class="text-left px-4 py-2 font-bold text-base"
+                      style='font-family:"Pixelated Arial"'
+                    >{Level}</td>
                     <td class="text-left px-4 py-2">{JobName}</td>
                     <td class="text-left px-4 py-2">
                       {((Exp / ExpRequired) * 100).toFixed(2)}%
                     </td>
                     <td class="text-left px-4 py-2">{Fame}</td>
                     <td class="text-left px-4 py-2">{Meso.toLocaleString()}</td>
-                    <td class="text-left px-4 py-2">{StreetName} - {MapName}</td>
+                    
                     <td class="text-right px-4 py-2">
                       <time datetime={playTimeHrs.toString()}>
                         {playTimeHrs} hrs
                       </time>
                     </td>
-                    <td class="text-right px-4 py-2"><time datetime={createDate}>{createDate}</time></td>
+                    {/*<td class="text-left px-4 py-2">{StreetName} - {MapName}</td>
+                  <td class="text-right px-4 py-2"><time datetime={createDate}>{createDate}</time></td>*/}
                   </tr>
                 );
               })}
