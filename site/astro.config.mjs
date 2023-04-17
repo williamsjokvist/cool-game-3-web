@@ -12,5 +12,7 @@ export default defineConfig({
     host: true,
     port: import.meta.env.PORT
   },
-  adapter: vercel()
+  adapter: vercel({
+    analytics: true
+  })
 });

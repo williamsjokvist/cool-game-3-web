@@ -21,7 +21,11 @@ export interface Props {
 const { title } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<script>
+  import { inject } from "@vercel/analytics";
+
+  inject();
+</script>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -35,7 +39,7 @@ const { title } = Astro.props;
       id="notice"
       class="fixed z-50 text-[#ff2] text-[15px] pt-1 pb-2 w-full bg-[rgba(0,0,0,.5)] h-[27px] top-0 left-0 overflow-hidden"
     >
-      <p class="whitespace-nowrap">{notice.slice(1,-1)}</p>
+      <p class="whitespace-nowrap">{notice.slice(1, -1)}</p>
     </div>
     <header class="relative max-h-[400px] top-[-50px]">
       <a href="/" aria-label="Go home">
