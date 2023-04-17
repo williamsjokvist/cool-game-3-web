@@ -22,3 +22,11 @@
   font-weight: 700;
   font-style: normal;
 }
+
+.font-arial {
+  font-family: "Pixelated Arial", Arial, sans-serif;
+}
+
+.font-sans {
+  font-family: "Pixelated MS Sans Serif", sans-serif;
+}

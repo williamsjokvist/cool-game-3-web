@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 
 import { CharacterModel } from "../types/character";
 import Nav from "../components/Nav.astro";
+import CharacterPopup from "../components/CharacterPopup.astro";
 
 const getRankings = async () => {
   let characters: CharacterModel[] = [];
@@ -30,11 +31,11 @@ const characters = await getRankings();
     <section class="text-white text-center my-8 text-xl">
       <h2 class="text-4xl font-bold">Total Characters: {characters.length}</h2>
       {
-        (characters && characters.length > 0) && (
-          <table class="mx-auto mt-8 border-spacing-y-1 border-separate">
+        characters && characters.length > 0 && (
+          <table class="mx-auto mt-8">
             <thead>
               <tr>
-                <th class="text-left font-bold px-4"></th>
+                <th class="text-left font-bold px-4" />
                 <th class="text-left font-bold px-4">Name</th>
                 <th class="text-left font-bold px-4">LV</th>
                 <th class="text-left font-bold px-4">Job</th>
@@ -42,8 +43,6 @@ const characters = await getRankings();
                 <th class="text-left font-bold px-4">Fame</th>
                 <th class="text-left font-bold px-4">Meso</th>
                 <th class="text-right font-bold px-4">Play Time</th>
-                {/*<th class="text-left font-bold px-4">Map</th>
-              <th class="text-left font-bold px-4">Date of Creation</th>*/}
               </tr>
             </thead>
             <tbody>
@@ -53,18 +52,9 @@ const characters = await getRankings();
                   Name,
                   Level,
                   JobName,
-                  StreetName,
-                  MapName,
                   Exp,
                   ExpRequired,
                   TotalPlayTime,
-                  CreateDate,
-                  Str,
-                  Luk,
-                  Dex,
-                  Int,
-                  MaxHP,
-                  MaxMP,
                   Meso,
                   Fame,
                 } = character;
@@ -72,30 +62,34 @@ const characters = await getRankings();
                   TotalPlayTime / 1000 / (60 * 60)
                 );
 
-                const createDate = CreateDate.slice(0, 10)
                 return (
-                  <tr class="even:bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.125)]">
+                  <tr class="relative group even:bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.125)]">
                     <td class="text-right px-4 py-2">#{Rank}</td>
-                    <td class="text-left px-4 py-2 text-base"
-                      style='font-family:"Pixelated Arial"'
-                    >{Name}</td>
-                    <td class="text-left px-4 py-2 font-bold text-base"
-                      style='font-family:"Pixelated Arial"'
-                    >{Level}</td>
+                    <td class="text-left px-4 py-2 text-base font-arial">
+                      <span class='bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white'>
+                        {Name}          
+                      </span>
+                      <CharacterPopup character={character} />
+                    </td>
+                    <td class="text-left px-4 py-2 font-bold text-base font-arial">
+                      {Level.toString()
+                        .split("")
+                        .map((num: string) => (
+                          <span class={`level-no level-no-${num}`} />
+                        ))}
+                    </td>
                     <td class="text-left px-4 py-2">{JobName}</td>
                     <td class="text-left px-4 py-2">
                       {((Exp / ExpRequired) * 100).toFixed(2)}%
                     </td>
                     <td class="text-left px-4 py-2">{Fame}</td>
                     <td class="text-left px-4 py-2">{Meso.toLocaleString()}</td>
-                    
+
                     <td class="text-right px-4 py-2">
                       <time datetime={playTimeHrs.toString()}>
                         {playTimeHrs} hrs
                       </time>
                     </td>
-                    {/*<td class="text-left px-4 py-2">{StreetName} - {MapName}</td>
-                  <td class="text-right px-4 py-2"><time datetime={createDate}>{createDate}</time></td>*/}
                   </tr>
                 );
               })}
