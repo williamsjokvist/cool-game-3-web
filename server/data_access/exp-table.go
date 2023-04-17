@@ -34,8 +34,8 @@ func InitializeExpTable() {
 	}
 
 	for _, expObj := range expTableJson.Levels {
-		fmt.Println(expObj)
 		expTable[expObj.Level] = expObj.Exp
+		fmt.Println(expObj.Level, " - ", expObj.Exp)
 	}
 }
 
