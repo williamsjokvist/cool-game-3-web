@@ -1,25 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Picture } from "@astrojs/image/components";
 import Icon from "astro-icon";
 import { getCollection, getEntryBySlug } from "astro:content";
+import Nav from "../components/Nav.astro";
+
 // Get all entries from a collection. Requires the name of the collection as an argument.
 const patchNotes = await getCollection("patch-notes");
 ---
 
 <Layout title="Cool Game 3 Patch Notes">
   <main class='pb-24'>
-    <a href="/" aria-label="Go home">
-      <Picture
-        class="mx-auto logo"
-        src="/logo.png"
-        widths={[200, 400, 800]}
-        aspectRatio="16:9"
-        sizes="(max-width: 800px) 100vw, 800px"
-        alt="Cool Game 3 Logotype"
-      />
-    </a>
-    <section class="text-white">
+    <Nav/>
+    <section class="text-white mt-8">
       <ul>
         {
           patchNotes.map(async (patchNote) => {

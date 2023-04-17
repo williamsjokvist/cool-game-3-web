@@ -17,14 +17,18 @@ type Character struct {
 	MaxMP                         int    `db:"maxmp"`
 	Meso                          int    `db:"meso"`
 	Job                           int    `db:"job"`
-	SkinColor                     int    `db:"skincolor"`
-	Gender                        bool   `db:"gender"`
-	Fame                          int    `db:"fame"`
-	Face                          int    `db:"face"`
-	Hair                          int    `db:"hair"`
-	AP                            int    `db:"ap"`
-	SP                            int    `db:"sp"`
-	Map                           int    `db:"map"`
+	JobName                       string
+	SkinColor                     int  `db:"skincolor"`
+	Gender                        bool `db:"gender"`
+	Fame                          int  `db:"fame"`
+	Face                          int  `db:"face"`
+	Hair                          int  `db:"hair"`
+	AP                            int  `db:"ap"`
+	SP                            int  `db:"sp"`
+	Map                           int  `db:"map"`
+	StreetName                    string
+	MapName                       string
+	ExpRequired                   int
 	SpawnPoint                    int    `db:"spawnpoint"`
 	Party                         int    `db:"party"`
 	BuddyCapacity                 int    `db:"buddyCapacity"`

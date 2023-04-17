@@ -1,5 +1,6 @@
 ---
 import Icon from "astro-icon";
+import { Picture } from "@astrojs/image/components";
 
 export interface Props {
   title: string;
@@ -20,22 +21,23 @@ const { title } = Astro.props;
   <body>
     <div
       id="notice"
-      class="text-[#ff2] py-1 text-[15px] font-[Arial] w-full bg-[rgba(0,0,0,.5)] h-[27px] top-0 left-0 overflow-hidden"
+      class="fixed z-50 text-[#ff2] text-[15px] pt-1 pb-2 w-full bg-[rgba(0,0,0,.5)] h-[27px] top-0 left-0 overflow-hidden"
     >
       <p class="whitespace-nowrap">Welcome to Cool Game 3.</p>
     </div>
-    <slot />
-    <footer
-      class="flex justify-center fixed bottom-0 w-full px-4 py-2 bg-black"
-    >
-      <a
-        href="/patches"
-        class="hover:underline text-xl mx-auto text-white flex gap-4 justify-between items-center"
-      >
-        <Icon name="ph:scroll-duotone" class="w-8 h-8" />
-        <span>Patch Notes</span>
+    <header class="relative max-h-[400px] top-[-50px]">
+      <a href="/" aria-label="Go home">
+        <Picture
+          class="mx-auto logo"
+          src="/logo.png"
+          widths={[200, 400, 800]}
+          aspectRatio="16:9"
+          sizes="(max-width: 800px) 100vw, 800px"
+          alt="Cool Game 3 Logotype"
+        />
       </a>
-    </footer>
+    </header>
+    <slot />
   </body>
 </html>
 <style is:global>
@@ -61,12 +63,12 @@ const { title } = Astro.props;
     background: #000;
     min-height: 100vh;
     background: linear-gradient(
-      180deg,
+      0deg,
       rgb(1, 1, 16) 0%,
       rgb(18, 2, 23) 48%,
       rgb(21, 14, 44) 100%
     );
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: "Pixelated MS Sans Serif", Geneva, Tahoma, sans-serif;
   }
   code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
@@ -82,7 +84,7 @@ const { title } = Astro.props;
   #notice {
     animation: marquee 35s linear infinite;
   }
-  
+
   @keyframes marquee {
     0% {
       text-indent: 100%;
@@ -176,5 +178,46 @@ const { title } = Astro.props;
   .register-btn:hover #sign-up-text text {
     fill: #fff;
     stroke: transparent;
+  }
+
+  @font-face {
+    font-family: "Cubic Five";
+    src: url("/fonts/cubicfive10.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Cubic Five";
+    src: url("/fonts/cubicfive11.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Cubic Five";
+    src: url("/fonts/cubicfive12.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Cubic Five";
+    src: url("/fonts/cubicfive18.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Pixelated MS Sans Serif";
+    src: url("fonts/ms_sans_serif.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Pixelated MS Sans Serif";
+    src: url("fonts/ms_sans_serif_bold.woff2") format("woff2");
+    font-weight: bold;
+    font-style: normal;
   }
 </style>

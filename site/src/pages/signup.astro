@@ -1,83 +1,237 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Picture } from "@astrojs/image/components";
 import Icon from "astro-icon";
+
+import yup from "yup";
+import Nav from "../components/Nav.astro";
+
+let errorMessages: string[] = [];
+
+let isSuccess: boolean = false;
+
+if (Astro.request.method === "POST") {
+  const RegistrationSchema = yup.object().shape({
+    discordUsername: yup.string().required(),
+    retypePassword: yup.string().min(4).max(12).required(),
+    birthday: yup.date().required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(4).max(12).required(),
+    name: yup.string().required(),
+  });
+
+  try {
+    const data = await Astro.request.formData();
+    const body = Object.fromEntries(data.entries());
+
+    const name = data.get("name");
+    const email = data.get("email");
+    const password = data.get("password");
+    const retypePassword = data.get("retypePassword");
+
+    const birthday = data.get("birthday");
+    const discordUsername = data.get("discordUsername");
+
+    await RegistrationSchema.validate(body).catch((result) => {
+      const { name, errors } = result;
+      errorMessages = errors;
+      console.log(errorMessages)
+    });
+
+    if (password !== retypePassword)
+      errorMessages.push("Passwords do not match");
+
+    if (errorMessages.length == 0) {
+      // Make request to the api
+      try {
+        const res = await fetch(`${import.meta.env.SERVER_URL}/account`, {
+          method: "post",
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+            birthday,
+            discordUsername,
+          }),
+        });
+
+        if (!res.ok) {
+          console.log("Failed to create account");
+        }
+
+        const json = await res.json();
+        console.log(json);
+        isSuccess = true;
+      } catch (error) {
+        console.log(error);
+        isSuccess = false;
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+      isSuccess = false;
+    }
+  }
+}
 ---
 
 <Layout title="Sign up to Cool Game 3">
   <main>
-    <a href="/" aria-label="Go home">
-      <Picture
-        class="mx-auto logo"
-        src="/logo.png"
-        widths={[200, 400, 800]}
-        aspectRatio="16:9"
-        sizes="(max-width: 800px) 100vw, 800px"
-        alt="Cool Game 3 Logotype"
-      />
-    </a>
+    <Nav noSignup={true}/>
 
-    <form
-      class="text-white text-center max-w-lg mx-auto mb-8 text-xl"
-    >
-      <h1 class="text-4xl font-bold mb-8">Sign up</h1>
-      <div class="flex items-center justify-between gap-4 mb-4">
-        <label for="username" class='font-bold'>Username</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          maxlength="12"
-          placeholder="CoolGamer3"
-          class="bg-[rgba(255,255,255,0.1)] px-4 py-2 rounded-md"
-        />
-      </div>
-      <div class="flex items-center justify-between gap-4 mb-4">
-        <label for="password" class='font-bold'>Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          maxlength="12"
-          placeholder="********"
-          class="bg-[rgba(255,255,255,0.1)] px-4 py-2 rounded-md"
-        />
-      </div>
-      <div class="flex items-center justify-between gap-4 mb-4">
-        <label for="retype-password" class='font-bold text-left'>Retype password</label>
-        <input
-          type="retype-password"
-          name="retype-password"
-          id="retype-password"
-          maxlength="12"
-          placeholder="********"
-          class="bg-[rgba(255,255,255,0.1)] px-4 py-2 rounded-md"
-        />
-      </div>
-      <div class="flex items-center justify-between gap-4 mb-4">
-        <label for="email" class='font-bold'>Email</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="coolgamer3@hotmail.com"
-          class="bg-[rgba(255,255,255,0.1)] px-4 py-2 rounded-md"
-        />
-      </div>
-      <button
-        type="submit"
-        class="mt-8 flex items-center justify-center gap-3 text-xl register-btn mx-auto"
-        style="filter: hue-rotate(175deg)"
-      >
-        <Icon name="raphael:power" class="w-14 h-14 relative bottom-[2px]" />
-        <svg
-          id="sign-up-text"
-          viewBox="0 0 210 80"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="65"> Sign Up</text>
-        </svg>
-      </button>
-    </form>
+    <h1 class="mt-8 text-4xl font-bold mb-8 text-white text-center">Sign up</h1>
+    {
+      isSuccess && (
+        <section class="text-center text-2xl error-box mb-8">
+          <header class="flex items-center gap-4 text-white p-4 rounded-lg justify-center mx-auto font-bold">
+            <i class="thumbs-up-icon"/>
+            <h2>Success!</h2>
+          </header>
+
+          <p class="text-xl text-white error-msg">You may now log in</p>
+        </section>
+      )
+    }
+    {
+      !isSuccess && (
+        <>
+          {errorMessages && errorMessages.length > 0 && (
+            <section class="text-center text-2xl error-box mb-8">
+              <header class="flex items-center gap-4 text-white p-4 rounded-lg justify-center mx-auto font-bold">
+                <Icon
+                  name="ic:baseline-warning-amber"
+                  class="text-red-500 w-12 h-12"
+                />
+                <h2>Error!</h2>
+              </header>
+
+              {errorMessages.map((error) => (
+                <p class="text-xl text-white error-msg">{error}</p>
+              ))}
+            </section>
+          )}
+          <form
+            method="post"
+            action="/signup"
+            class="text-white text-center max-w-xl mx-auto mb-8 text-xl"
+          >
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <label for="name" class="font-bold">
+                Username
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                minlength="4"
+                maxlength="12"
+                placeholder="CoolGamer3"
+                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+              />
+            </div>
+
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <label for="discordUsername" class="font-bold">
+                Discord Username
+              </label>
+              <input
+                type="text"
+                name="discordUsername"
+                id="discordUsername"
+                placeholder="CoolGamer3#69420"
+                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+              />
+            </div>
+
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <label for="discordUsername" class="font-bold">
+                Birthday
+              </label>
+              <input
+                type="date"
+                name="birthday"
+                id="birthday"
+                value="2003-01-01"
+                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+              />
+            </div>
+
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <label for="password" class="font-bold">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                maxlength="12"
+                minlength="4"
+                placeholder="********"
+                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+              />
+            </div>
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <label for="retypePassword" class="font-bold text-left">
+                Retype password
+              </label>
+              <input
+                type="password"
+                name="retypePassword"
+                id="retypePassword"
+                maxlength="12"
+                minlength="4"
+                placeholder="********"
+                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+              />
+            </div>
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <label for="email" class="font-bold">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="coolgamer3@hotmail.com"
+                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+              />
+            </div>
+            <button
+              type="submit"
+              class="mt-8 flex items-center justify-center gap-3 text-xl register-btn mx-auto"
+              style="filter: hue-rotate(175deg)"
+            >
+              <Icon
+                name="raphael:power"
+                class="w-14 h-14 relative bottom-[2px]"
+              />
+              <svg
+                id="sign-up-text"
+                viewBox="0 0 210 80"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <text x="0" y="65">
+                  {" "}
+                  Sign Up
+                </text>
+              </svg>
+            </button>
+          </form>
+        </>
+      )
+    }
   </main>
 </Layout>
+
+<style>
+  .error-msg:first-letter {
+    text-transform: uppercase;
+  }
+
+  .thumbs-up-icon {
+    width: 48px;
+    height: 48px;
+    background: url('https://api.iconify.design/fluent-emoji/thumbs-up.svg') no-repeat center center / contain;
+    
+  }
+</style>

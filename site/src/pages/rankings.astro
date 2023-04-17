@@ -1,0 +1,106 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import { CharacterModel } from "../types/character";
+import Nav from "../components/Nav.astro";
+
+const getRankings = async () => {
+  let characters: CharacterModel[] = [];
+  try {
+    const res = await fetch(`${import.meta.env.SERVER_URL}/characters`);
+    if (!res.ok) {
+      console.log("Failed to fetch rankings");
+    }
+
+    characters = await res.json();
+  } catch (err) {
+    console.log("Failed to fetch rankings");
+  }
+
+  return characters;
+};
+
+const characters = await getRankings();
+---
+
+<Layout title="Welcome to Cool Game 3">
+  <main class="pb-24">
+    <Nav />
+
+    <section class="text-white text-center my-8 text-xl">
+      <h2 class="text-4xl font-bold">Total Characters: {characters.length}</h2>
+      {
+        (characters && characters.length > 0) && (
+          <table class="mx-auto mt-8 border-spacing-y-1 border-separate">
+            <thead>
+              <tr>
+                <th class="text-left font-bold px-4"></th>
+                <th class="text-left font-bold px-4">Name</th>
+                <th class="text-left font-bold px-4">LV</th>
+                <th class="text-left font-bold px-4">Job</th>
+                <th class="text-left font-bold px-4">EXP</th>
+                <th class="text-left font-bold px-4">Fame</th>
+                <th class="text-left font-bold px-4">Meso</th>
+                <th class="text-left font-bold px-4">Map</th>
+                <th class="text-right font-bold px-4">Play Time</th>
+                <th class="text-left font-bold px-4">Date of Creation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {characters.map((character) => {
+                const {
+                  Rank,
+                  Name,
+                  Level,
+                  JobName,
+                  StreetName,
+                  MapName,
+                  Exp,
+                  ExpRequired,
+                  TotalPlayTime,
+                  CreateDate,
+                  Str,
+                  Luk,
+                  Dex,
+                  Int,
+                  MaxHP,
+                  MaxMP,
+                  Meso,
+                  Fame,
+                } = character;
+                const playTimeHrs = Math.floor(
+                  TotalPlayTime / 1000 / (60 * 60)
+                );
+
+                const createDate = CreateDate.slice(0, 10)
+                return (
+                  <tr class="even:bg-[rgba(255,255,255,0.05)] h-">
+                    <td class="text-right px-4 py-2">#{Rank}</td>
+                    <td class="text-left px-4 py-2">{Name}</td>
+                    <td class="text-left px-4 py-2">{Level}</td>
+                    <td class="text-left px-4 py-2">{JobName}</td>
+
+                    <td class="text-left px-4 py-2">
+                      {((Exp / ExpRequired) * 100).toFixed(2)}%
+                    </td>
+                    <td class="text-left px-4 py-2">{Fame}</td>
+                    <td class="text-left px-4 py-2">{Meso.toLocaleString()}</td>
+                    <td class="text-left px-4 py-2"><b>{StreetName}</b> - {MapName}</td>
+                    <td class="text-right px-4 py-2">
+                      <time datetime={playTimeHrs.toString()}>
+                        {playTimeHrs} hrs
+                      </time>
+                    </td>
+                    <td class="text-right px-4 py-2"><time datetime={createDate}>{createDate}</time></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )
+      }
+    </section>
+  </main>
+</Layout>
+
+<style is:global></style>

@@ -3,10 +3,11 @@ package routers
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 
+	"github.com/BurntSushi/toml"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -17,11 +18,30 @@ type Server struct {
 	router *gin.Engine
 }
 
-func connectToDatabase() (*sqlx.DB, error) {
-	connStr := os.Getenv("MYSQL_URL")
+type configData struct {
+	MysqlUrl string `toml:"mysql_url"`
+	Port     int    `toml:"port"`
+}
+
+var Config configData
+
+func initializeConfig() {
+	configFile, err := ioutil.ReadFile("./config.toml")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	if _, err := toml.Decode(string(configFile), &Config); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func connectToDatabase(url string) (*sqlx.DB, error) {
+	connStr := url
 
 	if connStr == "" {
-		return nil, errors.New("MYSQL_URL is not set")
+		return nil, errors.New("mysql_url is missing from the config file")
 	}
 
 	db, err := sqlx.Open("mysql", connStr)
@@ -30,7 +50,8 @@ func connectToDatabase() (*sqlx.DB, error) {
 }
 
 func CreateServer() *Server {
-	db, err := connectToDatabase()
+	initializeConfig()
+	db, err := connectToDatabase(Config.MysqlUrl)
 
 	if err != nil {
 		log.Fatal(err)
@@ -50,11 +71,23 @@ func (s *Server) helloWorld(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, "Cool Game 3 Web API")
 }
 
-func (s *Server) Run(addr ...string) {
+func (s *Server) Run() {
 	routers := s.router.Group("/")
 
 	routers.GET("/", s.helloWorld)
 	s.AttachAccountRoutes(routers)
 	s.AttachCharacterRoutes(routers)
-	s.router.Run(addr...)
+
+	if Config.Port == 0 {
+		log.Fatal("port is missing from the config file")
+		return
+	}
+
+	port := fmt.Sprintf(":%v", Config.Port)
+	fmt.Println("Server starting on port " + port + "...")
+
+	err := s.router.Run(port)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

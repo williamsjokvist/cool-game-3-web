@@ -1,0 +1,43 @@
+{
+  "FixedFileInfo": {
+      "FileVersion": {
+          "Major": 1,
+          "Minor": 0,
+          "Patch": 0,
+          "Build": 0
+      },
+      "ProductVersion": {
+          "Major": 1,
+          "Minor": 0,
+          "Patch": 0,
+          "Build": 0
+      },
+      "FileFlagsMask": "3f",
+      "FileFlags ": "00",
+      "FileOS": "040004",
+      "FileType": "01",
+      "FileSubType": "00"
+  },
+  "StringFileInfo": {
+      "Comments": "",
+      "CompanyName": "William Sjökvist",
+      "FileDescription": "Cool Game 3 Site Server,",
+      "FileVersion": "1.0.0",
+      "InternalName": "",
+      "LegalCopyright": "",
+      "LegalTrademarks": "",
+      "OriginalFilename": "cg3-site-server.exe",
+      "PrivateBuild": "",
+      "ProductName": "Cool Game 3 Site Server",
+      "ProductVersion": "v1.0.0.0",
+      "SpecialBuild": ""
+  },
+  "VarFileInfo": {
+      "Translation": {
+          "LangID": "0409",
+          "CharsetID": "04B0"
+      }
+  },
+  "IconPath": "./build/appicon.ico",
+  "ManifestPath": "./build/cg3-site-server.exe.manifest"
+}

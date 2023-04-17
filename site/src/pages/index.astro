@@ -1,91 +1,82 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Picture } from "@astrojs/image/components";
-import Icon from "astro-icon";
+import Nav from "../components/Nav.astro";
 
-import { CharacterModel } from "../models/character";
+import { CharacterModel } from "../types/character";
+
+let onlineCharacters: CharacterModel[] = [];
 
 const getOnlineCharacters = async () => {
-  const res = await fetch(`http://172.28.0.3:8081/characters/online`);
+  try {
+    const res = await fetch(`${import.meta.env.SERVER_URL}/characters/online`);
+    if (!res.ok) {
+      console.log("Failed to fetch online characters");
+    }
 
-  if (!res.ok) {
+    const body = await res.json();
+    onlineCharacters = body;
+  } catch (err) {
     console.log("Failed to fetch online characters");
   }
-
-  const onlineCharacters: CharacterModel[] = await res.json();
 
   return onlineCharacters;
 };
 
-const characters = await getOnlineCharacters();
+await getOnlineCharacters();
 ---
 
 <Layout title="Welcome to Cool Game 3">
-  <main>
-    <a href="/" aria-label="Go home">
-      <Picture
-        class="mx-auto logo"
-        src="/logo.png"
-        widths={[200, 400, 800]}
-        aspectRatio="16:9"
-        sizes="(max-width: 800px) 100vw, 800px"
-        alt="Cool Game 3 Logotype"
-      />
-    </a>
+  <main class="pb-24">
+    <Nav />
 
-    <nav class="w-full flex items-center gap-4 justify-center">
-      <a
-        href="/signup"
-        class="flex items-center justify-center gap-3 text-xl register-btn mx-auto"
-      >
-        <Icon name="raphael:power" class="w-14 h-14 relative bottom-[2px]" />
-        <svg
-          id="sign-up-text"
-          viewBox="0 0 210 80"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="65"> Sign Up</text>
-        </svg>
-      </a>
-    </nav>
+    {
+      (onlineCharacters && onlineCharacters.length > 0) && (
+        <section class="text-white text-center my-8 text-xl">
+          <h2 class="text-4xl font-bold">
+            Players Online: {onlineCharacters.length}
+          </h2>
 
-    <section class="text-white text-center my-8 text-xl">
-      <h2 class="text-4xl font-bold">Players Online: {characters.length}</h2>
+          <table class="mx-auto mt-8 border-spacing-y-1 border-separate">
+            <thead>
+              <tr>
+                <th class="text-left font-bold px-4">Name</th>
+                <th class="text-left font-bold px-4">LV</th>
+                <th class="text-left font-bold px-4">Job</th>
+                <th class="text-left font-bold px-4">EXP</th>
+                <th class="text-left font-bold px-4">Map</th>
+              </tr>
+            </thead>
+            <tbody>
+              {onlineCharacters.map((character) => {
+                  const {
+                    Name,
+                    Level,
+                    JobName,
+                    StreetName,
+                    MapName,
+                    Exp,
+                    ExpRequired,
+                  } = character;
 
-      <table class="mx-auto mt-8 border-spacing-y-1 border-separate">
-        <thead>
-          <tr>
-            <th class="text-left font-bold px-4">Name</th>
-            <th class="text-left font-bold px-4">Level</th>
-            <th class="text-left font-bold px-4">Job</th>
-            <th class="text-left font-bold px-4">Map</th>
-            <th class="text-left font-bold px-4">TotalPlayTime</th>
-            <th class="text-left font-bold px-4">CreateDate</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            characters.map((character) => {
-              const playTimeHrs = Math.floor(
-                character.TotalPlayTime / 1000 / (60 * 60)
-              );
-              return (
-                <tr>
-                  <td class="text-left px-4">{character.Name}</td>
-                  <td class="text-left px-4">{character.Level}</td>
-                  <td class="text-left px-4">{character.Job}</td>
-                  <td class="text-left px-4">{character.Map}</td>
-                  <td class="text-right px-4"><time datetime={playTimeHrs.toString()}>{playTimeHrs} hrs</time></td>
-                  <td class="text-left px-4">
-                    {character.CreateDate.slice(0, 10)}
-                  </td>
-                </tr>
-              );
-            })
-          }
-        </tbody>
-      </table>
-    </section>
+                  return (
+                    <tr>
+                      <td class="text-left px-4">{Name}</td>
+                      <td class="text-left px-4">{Level}</td>
+                      <td class="text-left px-4">{JobName}</td>
+                      <td class="text-left px-4">
+                        {((Exp / ExpRequired) * 100).toFixed(2)}%
+                      </td>
+                      <td class="text-left px-4">
+                        {StreetName + " - " + MapName}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </section>
+      )
+    }
   </main>
 </Layout>
 

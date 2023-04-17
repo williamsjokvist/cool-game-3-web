@@ -3,8 +3,7 @@
 ## 1st year anniversary event
 - Speak to Charles to enter the sweetest of event maps! 
 - Cakes are found all over Maple World! Find em' Slay em' get... cake? 
-- Cool game 1st year anniversary reward: On April 2nd
-(Anniversary day) you may recieve a special item from the Maple Admin!
+- **Cool game 1st year anniversary reward**: On April 2nd (Anniversary day) you may recieve a special item from the Maple Admin!
 This offer expires the very next day (April 3rd.) 
 
 ## Easter event
@@ -20,7 +19,8 @@ your Set-up inventory and can now be stacked up to 1000!
 
 ## Skill Changes 
 - Rage (At max rank) ATK: ̶1̶0̶ > 15, Duration: ̶1̶6̶0̶ > 200 sec. 
-- Meso Guard (At max rank) Duration: ̶1̶2̶0̶ > 200 sec. -Iron Will (At max rank) Wdef/mdef: ̶2̶0̶ > 60 
+- Meso Guard (At max rank) Duration: ̶1̶2̶0̶ > 200 sec.
+- Iron Will (At max rank) Wdef/mdef: ̶2̶0̶ > 60 
 
 ## Drop Changes 
 - Pet balrog is now available and drops from Jr.Balrog - Its' Crimson mask is dropped by Crimson Balrog 
@@ -47,7 +47,7 @@ your Set-up inventory and can now be stacked up to 1000!
 - Cosmos Ring - (Drops from Papulatus) 
 - Maple Weapons - (PLEASE NOTE: Maple Weapons have been nerfed and WILL have secondary stat requirements.) 
 
-## New Quests-- 
+## New Quests
 - Cool game 1st year anniversary reward - (Only available April 2nd!) 
 - Wanted: Hector 
 - Wanted: Pepe 

@@ -6,9 +6,10 @@ export type CharacterModel = {
   Name: string;
   Level: number;
   Exp: number;
+  ExpRequired: number;
   Str: number;
   Dex: number;
-  number: number;
+  Int: number;
   Luk: number;
   HP: number;
   MP: number;
@@ -16,12 +17,15 @@ export type CharacterModel = {
   MaxMP: number;
   Meso: number;
   Job: number;
+  JobName: string;
   Fame: number;
   Face: number,
   Hair: number;
   AP: number;
   SP: number;
   Map: number;
+  MapName: string;
+  StreetName: string;
   SpawnPo: number;
   Party: number;
   BuddyCapacity: number;
