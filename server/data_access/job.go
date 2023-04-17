@@ -35,8 +35,6 @@ func InitializeJobs() {
 	}
 
 	for _, job := range jobList.Jobs {
-		fmt.Println(job)
-
 		jobId, err := strconv.Atoi(job.Id)
 		if err != nil {
 			log.Fatal(err)
@@ -44,6 +42,7 @@ func InitializeJobs() {
 		}
 
 		jobMap[jobId] = job.Name
+		fmt.Println(jobId, " - ", job.Name)
 	}
 }
 
