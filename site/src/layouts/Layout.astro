@@ -1,6 +1,9 @@
 ---
+import Icon from "astro-icon";
+import { Picture } from "@astrojs/image/components";
+
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -8,19 +11,34 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Viga&display=swap" rel="stylesheet"> 
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div
+      id="notice"
+      class="fixed z-50 text-[#ff2] text-[15px] pt-1 pb-2 w-full bg-[rgba(0,0,0,.5)] h-[27px] top-0 left-0 overflow-hidden"
+    >
+      <p class="whitespace-nowrap">Welcome to Cool Game 3.</p>
+    </div>
+    <header class="relative max-h-[400px] top-[-50px]">
+      <a href="/" aria-label="Go home">
+        <Picture
+          class="mx-auto logo"
+          src="/logo.png"
+          widths={[200, 400, 800]}
+          aspectRatio="16:9"
+          sizes="(max-width: 800px) 100vw, 800px"
+          alt="Cool Game 3 Logotype"
+        />
+      </a>
+    </header>
+    <slot />
+  </body>
 </html>
 <style is:global>
   * {
@@ -29,18 +47,177 @@ const { title } = Astro.props;
     padding: 0;
     margin: 0;
   }
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-	}
+  :root {
+    --accent: 124, 58, 237;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      #da62c4 30%,
+      white 60%
+    );
+  }
+  html {
+    font-family: system-ui, sans-serif;
+  }
   body {
     background: #000;
+    min-height: 100vh;
+    background: linear-gradient(
+      0deg,
+      rgb(1, 1, 16) 0%,
+      rgb(18, 2, 23) 48%,
+      rgb(21, 14, 44) 100%
+    );
+    font-family: "Pixelated MS Sans Serif", Geneva, Tahoma, sans-serif;
   }
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+
+  .logo {
+    position: relative;
+    animation: MoveUpDown 4s linear infinite;
+    animation-timing-function: ease-in-out;
+  }
+
+  #notice {
+    animation: marquee 35s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      text-indent: 100%;
+    }
+    100% {
+      text-indent: -100%;
+    }
+  }
+
+  @keyframes MoveUpDown {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(25px);
+    }
+  }
+
+  .register-btn {
+    position: relative;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 230px;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    padding: 10px 25px;
+    font-size: 64px;
+    letter-spacing: 0;
+    border-radius: 8px;
+    border: 1.25px solid white;
+    outline: 1.25px solid #1084ff;
+    text-shadow: 0px 0px 0px #0383ca;
+    background: linear-gradient(
+      to bottom,
+      #1084ff 0%,
+      #1084ff 10%,
+      #128eff 11%,
+      #128eff 20%,
+      #1494ff 21%,
+      #1494ff 30%,
+      #1699ff 31%,
+      #1699ff 40%,
+      #189cff 41%,
+      #189cff 50%,
+      #1aa4ff 51%,
+      #1aa4ff 60%,
+      #1caaff 61%,
+      #1caaff 70%,
+      #20b0ff 71%,
+      #24baff 80%,
+      #24baff 81%,
+      #27bfff 90%,
+      #2ac6ff 91%,
+      #2ac6ff 100%
+    );
+
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .register-btn::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    width: calc(100% - 8px);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.25);
+    height: 8px;
+  }
+
+  .register-btn #sign-up-text text {
+    fill: transparent;
+    stroke: #fff;
+    stroke-width: 3px;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .register-btn svg {
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .register-btn:hover {
+    filter: brightness(1.075);
+  }
+  .register-btn:hover svg:first-of-type {
+    transform: translateY(-2px);
+  }
+  .register-btn:hover svg {
+    filter: drop-shadow(0px 0px 8px #cbf1ff);
+  }
+  .register-btn:hover #sign-up-text text {
+    fill: #fff;
+    stroke: transparent;
+  }
+
+  @font-face {
+    font-family: "Cubic Five";
+    src: url("/fonts/cubicfive10.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Cubic Five";
+    src: url("/fonts/cubicfive11.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Cubic Five";
+    src: url("/fonts/cubicfive12.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Cubic Five";
+    src: url("/fonts/cubicfive18.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Pixelated MS Sans Serif";
+    src: url("fonts/ms_sans_serif.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Pixelated MS Sans Serif";
+    src: url("fonts/ms_sans_serif_bold.woff2") format("woff2");
+    font-weight: bold;
+    font-style: normal;
+  }
 </style>

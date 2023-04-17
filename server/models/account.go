@@ -11,14 +11,14 @@ type Account struct {
 	RegisterDate            string         `db:"registerDate"`
 	Birthday                string         `db:"birthday"`
 	Banned                  bool           `db:"banned"`
-	BanReason               string         `db:"banreason"`
-	GM                      bool           `db:"gm"`
-	Email                   string         `db:"email"`
+	BanReason               sql.NullString `db:"banreason"`
+	GM                      int            `db:"gm"`
+	Email                   sql.NullString `db:"email"`
 	IP                      string         `db:"ip"`
 	EmailCode               sql.NullString `db:"emailcode"`
 	ForumAccId              int            `db:"forumaccid"`
-	HWID                    string         `db:"hwid"`
-	MACS                    string         `db:"macs"`
+	HWID                    sql.NullString `db:"hwid"`
+	MACS                    sql.NullString `db:"macs"`
 	LastKnownIP             string         `db:"lastknownip"`
 	LastPWEmail             string         `db:"lastpwemail"`
 	TempBan                 string         `db:"tempban"`
@@ -31,7 +31,7 @@ type Account struct {
 	MuteDate                string         `db:"muteDate"`
 	Mute                    bool           `db:"mute"`
 	SessionID               sql.NullString `db:"sessionid"`
-	MaxCharacters           bool           `db:"maxCharacters"`
+	MaxCharacters           int            `db:"maxCharacters"`
 	PIN                     sql.NullInt16  `db:"pin"`
 	TOS                     bool           `db:"tos"`
 	PINTime                 sql.NullString `db:"pintime"`

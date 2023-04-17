@@ -1,0 +1,46 @@
+---
+import Icon from "astro-icon";
+
+const { noSignup } = Astro.props;
+---
+
+<nav class="w-full grid items-center gap-4 justify-center">
+  {
+    !noSignup && (
+      <a
+        href="/signup"
+        class="flex items-center justify-center gap-3 text-xl register-btn mx-auto"
+      >
+        <Icon name="raphael:power" class="w-14 h-14 relative bottom-[2px]" />
+        <svg
+          id="sign-up-text"
+          viewBox="0 0 210 80"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <text x="0" y="65">
+            {" "}
+            Sign Up
+          </text>
+        </svg>
+      </a>
+    )
+  }
+
+  <div class="flex items-center justify-center gap-20 pt-4">
+    <a
+      href="/patches"
+      class="hover:underline text-xl mx-auto text-white flex gap-4 justify-between items-center"
+    >
+      <Icon name="ph:scroll-duotone" class="w-8 h-8" />
+      <span>Patch Notes</span>
+    </a>
+
+    <a
+      href="/rankings"
+      class="hover:underline text-xl mx-auto text-white flex gap-4 justify-between items-center"
+    >
+      <Icon name="icon-park-outline:ranking" class="w-8 h-8" />
+      <span>Rankings</span>
+    </a>
+  </div>
+</nav>
