@@ -59,16 +59,14 @@ await getOnlineCharacters();
                   } = character;
 
                   return (
-                    <tr>
-                      <td class="text-left px-4">{Name}</td>
-                      <td class="text-left px-4">{Level}</td>
-                      <td class="text-left px-4">{JobName}</td>
-                      <td class="text-left px-4">
+                    <tr class="even:bg-[rgba(255,255,255,0.05)]">
+                      <td class="text-left px-4 py-2">{Name}</td>
+                      <td class="text-left px-4 py-2">{Level}</td>
+                      <td class="text-left px-4 py-2">{JobName}</td>
+                      <td class="text-left px-4 py-2">
                         {((Exp / ExpRequired) * 100).toFixed(2)}%
                       </td>
-                      <td class="text-left px-4">
-                        {StreetName + " - " + MapName}
-                      </td>
+                      <td class="text-left px-4 py-2">{StreetName} - {MapName}</td>
                     </tr>
                   );
                 })}

@@ -74,18 +74,17 @@ const characters = await getRankings();
 
                 const createDate = CreateDate.slice(0, 10)
                 return (
-                  <tr class="even:bg-[rgba(255,255,255,0.05)] h-">
+                  <tr class="even:bg-[rgba(255,255,255,0.05)]">
                     <td class="text-right px-4 py-2">#{Rank}</td>
                     <td class="text-left px-4 py-2">{Name}</td>
                     <td class="text-left px-4 py-2">{Level}</td>
                     <td class="text-left px-4 py-2">{JobName}</td>
-
                     <td class="text-left px-4 py-2">
                       {((Exp / ExpRequired) * 100).toFixed(2)}%
                     </td>
                     <td class="text-left px-4 py-2">{Fame}</td>
                     <td class="text-left px-4 py-2">{Meso.toLocaleString()}</td>
-                    <td class="text-left px-4 py-2"><b>{StreetName}</b> - {MapName}</td>
+                    <td class="text-left px-4 py-2">{StreetName} - {MapName}</td>
                     <td class="text-right px-4 py-2">
                       <time datetime={playTimeHrs.toString()}>
                         {playTimeHrs} hrs
@@ -102,5 +101,3 @@ const characters = await getRankings();
     </section>
   </main>
 </Layout>
-
-<style is:global></style>

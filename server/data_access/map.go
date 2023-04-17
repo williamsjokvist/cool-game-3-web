@@ -37,7 +37,7 @@ func InitializeMapData() {
 	mapInfoMap = make(map[int]MapInfo)
 
 	// read the Map.img.xml file
-	mapData, err := ioutil.ReadFile("./data/Map.img.xml")
+	mapData, err := ioutil.ReadFile("./db/Map.img.xml")
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -75,15 +75,13 @@ func InitializeMapData() {
 				}
 			}
 
-			if streetName != "" && mapName != "" {
-				// Store the map data in a map
-				mapInfoMap[mapId] = MapInfo{
-					streetName,
-					mapName,
-				}
-
-				fmt.Println(mapInfoMap[mapId].StreetName, " - ", mapInfoMap[mapId].MapName)
+			// Store the map data in a map
+			mapInfoMap[mapId] = MapInfo{
+				streetName,
+				mapName,
 			}
+
+			fmt.Println(mapInfoMap[mapId].StreetName, " - ", mapInfoMap[mapId].MapName)
 		}
 	}
 }

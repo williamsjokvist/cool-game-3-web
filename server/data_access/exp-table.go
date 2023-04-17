@@ -20,7 +20,7 @@ var expTable map[int]int
 
 func InitializeExpTable() {
 	expTable = make(map[int]int)
-	file, err := ioutil.ReadFile("./data/exp-table.json")
+	file, err := ioutil.ReadFile("./db/exp-table.json")
 	if err != nil {
 		log.Fatal(err)
 		return

@@ -17,7 +17,7 @@ const patchNotes = await getCollection("patch-notes");
           patchNotes.map(async (patchNote) => {
             const { Content } = await patchNote.render();
             return (
-              <article class="prose lg:prose-xl prose-xl max-w-2xl mx-auto">
+              <article class="patch-note max-w-2xl mx-auto">
                 <Content />
               </article>
             );
@@ -29,22 +29,22 @@ const patchNotes = await getCollection("patch-notes");
 </Layout>
 
 <style is:global>
-  .prose ul {
+  .patch-note ul {
     list-style: disc;
     margin-left: 30px;
   }
 
-  .prose li {
+  .patch-note li {
     margin-bottom: 4px;
   }
 
-  .prose h1 {
+  .patch-note h1 {
     font-size: 2.25rem;
     line-height: 2.5rem;
     font-weight: bold;
   }
-  .prose h2 {
-    font-size: 2.25rem;
+  .patch-note h2 {
+    font-size: 1.55rem;
     line-height: 2.5rem;
     margin: 20px 0;
   }

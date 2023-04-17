@@ -21,7 +21,7 @@ var jobMap map[int]string
 
 func InitializeJobs() {
 	jobMap = make(map[int]string)
-	file, err := ioutil.ReadFile("./data/jobs.json")
+	file, err := ioutil.ReadFile("./db/jobs.json")
 	if err != nil {
 		log.Fatal(err)
 		return
