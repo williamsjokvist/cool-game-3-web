@@ -22,6 +22,9 @@ dependencies:
   astro-icon:
     specifier: ^0.8.0
     version: 0.8.0
+  astro-spa:
+    specifier: ^1.3.9
+    version: 1.3.9
   sass:
     specifier: ^1.62.0
     version: 1.62.0
@@ -961,6 +964,10 @@ packages:
       node-fetch: 3.3.1
       resolve-pkg: 2.0.0
       svgo: 2.8.0
+    dev: false
+
+  /astro-spa@1.3.9:
+    resolution: {integrity: sha512-VmXMUsKNHA1gjJYq/SO5EqRAmqifOhBOpOAaXnlH5skgTy0tq9fwANJhh1LJpaahPBGqXAaoIw6Gdq/SBRz9Ww==}
     dev: false
 
   /astro@2.3.0(sass@1.62.0):
