@@ -48,24 +48,32 @@ const characters = await getRankings();
       let cmpValueA: string | number = cmpElementA.textContent;
       let cmpValueB: string | number = cmpElementB.textContent;
 
-      if (column == TableHeads.Lv || column == TableHeads.Exp || column == TableHeads.Fame || column == TableHeads.Meso || column == TableHeads.PlayTime) {
+      if (column == TableHeads.Rank ||
+        column == TableHeads.Lv || 
+        column == TableHeads.Exp || 
+        column == TableHeads.Fame ||
+        column == TableHeads.Meso || 
+        column == TableHeads.PlayTime) {
         cmpValueA = Number(cmpElementA.getAttribute('data-number'))
         cmpValueB = Number(cmpElementB.getAttribute('data-number'))
-        if (cmpValueA > cmpValueB)
-          return -1
-        else if (cmpValueA < cmpValueB)
-          return 1
-        else
-          return 0
-      } else {
-        // Order by name
-        if (cmpValueA < cmpValueB)
+
+        if (column != TableHeads.Rank) {
+          if (cmpValueA > cmpValueB)
+            return -1
+          else if (cmpValueA < cmpValueB)
+            return 1
+          else
+            return 0
+        }
+
+      }
+
+      if (cmpValueA < cmpValueB)
           return -1
         else if (cmpValueA > cmpValueB)
           return 1
         else
           return 0
-      }
     });
     
     table.querySelector(`tbody`).append(...sortedRows);
