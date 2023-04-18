@@ -153,14 +153,18 @@ code {
 }
 
 .level-no {
-  background-image: url('/levelno.png');
-  background-size: 220px 26px;
-  background-repeat: no-repeat;
-  display: inline-block;
-  image-rendering: pixelated;
-  width: 22px;
   height: 26px;
-  margin-right: 2px;
+
+  > * {
+    background-image: url('/levelno.png');
+    background-size: 220px 26px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    image-rendering: pixelated;
+    width: 22px;
+    height: 26px;
+    margin-right: 2px;
+  }
 }
 
 .level-no-0 {

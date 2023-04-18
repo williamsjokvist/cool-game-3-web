@@ -131,11 +131,13 @@ const characters = await getRankings();
                       <CharacterPopup character={character} />
                     </td>
                     <td class="text-left px-4 py-2 font-bold text-base font-arial" aria-label={`Level ${Level}`} data-number={Level}>
-                      {Level.toString()
-                        .split("")
-                        .map((num: string) => (
-                          <span class={`level-no level-no-${num}`} />
-                        ))}
+                      <span class='level-no'>
+                        {
+                          Level.toString()
+                          .split('')
+                          .map(num => <span class={`level-no-${num}`} />)
+                        }  
+                      </span>
                     </td>
                     <td class="text-left px-4 py-2">{JobName}</td>
                     <td class="text-left px-4 py-2" data-number={((Exp / ExpRequired) * 100).toFixed(2)}>

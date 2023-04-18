@@ -69,11 +69,13 @@ await getOnlineCharacters();
                       <CharacterPopup character={character} />
                     </td>
                     <td class="text-left px-4 py-2 font-bold text-base">
-                      {Level.toString()
-                        .split("")
-                        .map((num: string) => (
-                          <span class={`level-no level-no-${num}`} />
-                        ))}
+                      <span class='level-no'>
+                        {
+                          Level.toString()
+                          .split("")
+                          .map(num => (<span class={`level-no-${num}`} />))
+                        }          
+                      </span>
                     </td>
                     <td class="text-left px-4 py-2">{JobName}</td>
                     <td class="text-left px-4 py-2">{expPercentage}</td>

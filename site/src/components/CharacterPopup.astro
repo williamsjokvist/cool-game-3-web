@@ -39,11 +39,11 @@ const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
     {JobName}
     <span>|</span>
     <span class="font-bold">LV.</span>
-    <span>
+    <span class='level-no'>
       {
         Level.toString()
           .split("")
-          .map((num: string) => <span class={`level-no level-no-${num}`} />)
+          .map((num: string) => <span class={`level-no-${num}`} />)
       }
     </span>
   </div>
