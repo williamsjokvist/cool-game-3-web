@@ -87,11 +87,15 @@ const characters = await getRankings();
 </script>
 <Layout title="Cool Game 3 - Rankings">
   <main class="mt-12 pb-24">
-    <section class="text-white text-center text-xl">
-      <h2 class="text-4xl font-bold">Total Characters: {characters.length}</h2>
+    <section class="text-white text-center">
+      <h2 class="text-xl md:text-2xl font-bold flex gap-4 items-center justify-center">Total Characters:  
+        <span class='level-no' style='filter: hue-rotate(94deg)'>
+          {characters.length.toString().split('').map(num => <span class={`level-no-${num}`} />)}  
+        </span>
+      </h2>
       {
         characters && characters.length > 0 && (
-          <table id="rankings" class="mx-auto mt-8">
+          <table id="rankings" class="overflow-x-scroll mx-auto mt-8 text-sm md:text-xl">
             <thead>
               <tr>
                 <th class="text-center font-bold px-4"><button type='button' class='text-center w-full hover:underline'>Overall Rank</button></th>
@@ -124,29 +128,25 @@ const characters = await getRankings();
                 return (
                   <tr class="relative group even:bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.125)]">
                     <td class="rank text-center px-4 py-2" data-number={Rank}>#{Rank}</td>
-                    <td class="text-left px-4 py-2 text-base font-arial">
-                      <span class='bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white'>
+                    <td class="text-left px-4 py-2 text-xs md:text-base font-arial">
+                      <span class='text-[8px] sm:text-[12px] md:text-[16px] bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white'>
                         {Name}          
                       </span>
                       <CharacterPopup character={character} />
                     </td>
-                    <td class="text-left px-4 py-2 font-bold text-base font-arial" aria-label={`Level ${Level}`} data-number={Level}>
+                    <td class='px-4' aria-label={`Level ${Level}`} data-number={Level}>
                       <span class='level-no'>
-                        {
-                          Level.toString()
-                          .split('')
-                          .map(num => <span class={`level-no-${num}`} />)
-                        }  
+                        {Level.toString().split('').map(num => <span class={`level-no-${num}`} />)}  
                       </span>
                     </td>
-                    <td class="text-left px-4 py-2">{JobName}</td>
-                    <td class="text-left px-4 py-2" data-number={((Exp / ExpRequired) * 100).toFixed(2)}>
+                    <td class="text-left px-4 py-2 whitespace-nowrap">{JobName}</td>
+                    <td class="text-left px-4 py-2 whitespace-nowrap" data-number={((Exp / ExpRequired) * 100).toFixed(2)}>
                       {((Exp / ExpRequired) * 100).toFixed(2)}%
                     </td>
-                    <td class="text-left px-4 py-2" data-number={Fame}>{Fame}</td>
-                    <td class="text-left px-4 py-2" data-number={Meso}>{Meso.toLocaleString()}</td>
+                    <td class="text-left px-4 py-2 whitespace-nowrap" data-number={Fame}>{Fame}</td>
+                    <td class="text-left px-4 py-2 whitespace-nowrap" data-number={Meso}>{Meso.toLocaleString()}</td>
 
-                    <td class="text-right px-4 py-2" data-number={playTimeHrs}>
+                    <td class="text-right px-4 py-2 whitespace-nowrap" data-number={playTimeHrs}>
                       <time datetime={playTimeHrs.toString()}>
                         {playTimeHrs} hrs
                       </time>

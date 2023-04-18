@@ -31,11 +31,12 @@ await getOnlineCharacters();
     {
       onlineCharacters && onlineCharacters.length > 0 && (
         <section class="text-white text-center text-xl">
-          <h2 class="text-4xl font-bold">
-            Players Online: {onlineCharacters.length}
+          <h2 class="text-xl md:text-2xl font-bold flex gap-4 items-center justify-center">Players Online:  
+            <span class='level-no' style='filter: hue-rotate(94deg)'>
+              {onlineCharacters.length.toString().split('').map(num => <span class={`level-no-${num}`} />)}  
+            </span>
           </h2>
-
-          <table class="mx-auto mt-8">
+          <table class="overflow-x-scroll mx-auto mt-8 text-sm md:text-xl">
             <thead>
               <tr>
                 <th class="text-left font-bold px-4 py-1">Name</th>
@@ -46,45 +47,45 @@ await getOnlineCharacters();
               </tr>
             </thead>
             <tbody>
-              {onlineCharacters.map((character) => {
+              {onlineCharacters.map(character => {
                 const {
+                  Rank,
                   Name,
                   Level,
                   JobName,
-                  StreetName,
-                  MapName,
                   Exp,
                   ExpRequired,
+                  TotalPlayTime,
+                  Meso,
+                  Fame,
+                  StreetName,
+                  MapName
                 } = character;
-
-                const expPercentage =
-                  ((Exp / ExpRequired) * 100).toFixed(2) + "%";
+                const playTimeHrs = Math.floor(
+                  TotalPlayTime / 1000 / (60 * 60)
+                );
 
                 return (
                   <tr class="relative group even:bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.125)]">
-                    <td class="text-left px-4 py-2 text-base font-arial">
-                      <span class='bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white'>
+                    <td class="text-left px-4 py-2 text-xs md:text-base font-arial">
+                      <span class='text-[8px] sm:text-[12px] md:text-[16px] bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white'>
                         {Name}          
                       </span>
                       <CharacterPopup character={character} />
                     </td>
-                    <td class="text-left px-4 py-2 font-bold text-base">
+                    <td class='px-4' aria-label={`Level ${Level}`} data-number={Level}>
                       <span class='level-no'>
-                        {
-                          Level.toString()
-                          .split("")
-                          .map(num => (<span class={`level-no-${num}`} />))
-                        }          
+                        {Level.toString().split('').map(num => <span class={`level-no-${num}`} />)}  
                       </span>
                     </td>
-                    <td class="text-left px-4 py-2">{JobName}</td>
-                    <td class="text-left px-4 py-2">{expPercentage}</td>
-                    <td class="text-left px-4 py-2">
-                      {StreetName} - {MapName}
-                    </td>
-                  </tr>
-                );
-              })}
+                    <td class="text-left px-4 py-2 whitespace-nowrap">{JobName}</td>
+                    <td class="text-left px-4 py-2 whitespace-nowrap" data-number={((Exp / ExpRequired) * 100).toFixed(2)}>
+                      {((Exp / ExpRequired) * 100).toFixed(2)}%
+                    </td> 
+                    <td class="text-left px-4 py-2 whitespace-nowrap">{StreetName} - {MapName}</td>
+
+                  </tr>)}
+                )}
             </tbody>
           </table>
         </section>
