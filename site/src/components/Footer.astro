@@ -1,0 +1,27 @@
+---
+import Icon from "astro-icon";
+const { noSignup } = Astro.props;
+---
+
+<footer class='py-12'>
+  {
+    !noSignup && (
+      <a
+        href="/signup"
+        class="flex items-center justify-center gap-3 text-xl register-btn mx-auto"
+      >
+        <Icon name="raphael:power" class="w-14 h-14 relative bottom-[2px]" />
+        <svg
+          id="sign-up-text"
+          viewBox="0 0 210 80"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <text x="0" y="65">
+            {" "}
+            Sign Up
+          </text>
+        </svg>
+      </a>
+    )
+  }
+</footer>
