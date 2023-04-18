@@ -1,17 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Icon from "astro-icon";
-import { getCollection, getEntryBySlug } from "astro:content";
+import { getCollection } from "astro:content";
 import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
 
 // Get all entries from a collection. Requires the name of the collection as an argument.
 const patchNotes = await getCollection("patch-notes");
 ---
 
 <Layout title="Cool Game 3 - Patch Notes">
-  <main class='pb-24'>
-    <Nav/>
-    <section class="text-white mt-8">
+  <main class='mt-12'>
+    <section class="text-white">
       <ul>
         {
           patchNotes.map(async (patchNote) => {
@@ -26,6 +25,7 @@ const patchNotes = await getCollection("patch-notes");
       </ul>
     </section>
   </main>
+  <Footer />
 </Layout>
 
 <style is:global>

@@ -2,6 +2,7 @@
 import "../style/style.css";
 import "../style/fonts.css";
 import { Picture } from "@astrojs/image/components";
+import Nav from "../components/Nav.astro";
 
 const getNotice = async () => {
   try {
@@ -54,6 +55,7 @@ const { title } = Astro.props;
         />
       </a>
     </header>
+    <Nav/>
     <slot />
   </body>
 </html>
