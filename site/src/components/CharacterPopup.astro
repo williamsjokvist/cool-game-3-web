@@ -22,32 +22,44 @@ const {
   Rank,
   CreateDate,
   TotalPlayTime,
+  Face,
+  Hair,
 } = character as CharacterModel;
 
 const expPercentage = ((Exp / ExpRequired) * 100).toFixed(2) + "%";
 const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
 ---
 
+<script defer>
+  const url = `https://maplestory.io/api/character/{itemId:35330,version:240}`
+</script>
+
 <section
   class="min-w-[320px] text-center group-hover:block hidden bg-[#e4e1d4] text-black border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur absolute z-50 top-[-240px] left-[15px] md:left-[150px] px-4 py-2 rounded-lg"
 >
-  <span
-    class="bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white"
-    >{Name}</span
-  ><br /><br />
-  <div class="flex items-center justify-center gap-2 font-semismall">
-    {JobName}
-    <span>|</span>
-    <span class="font-bold">LV.</span>
-    <span class='level-no'>
-      {Level.toString().split('').map(num => <span class={`level-no-${num}`} />)}
-    </span>
-  </div>
-  <br />
-  <span class="block font-small pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
-    >{StreetName} - {MapName}</span
-  >
-
+  <header>
+    <figure class='grid justify-items-center'>
+      <img
+        src={`https://maplestory.io/api/character/{itemId:2000,version:240},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:12000,version:240}/stand1/animated?resize=1&renderMode=default&flipX=true`}
+        alt=""
+        loading="lazy"
+      />
+      <figcaption class="mt-2 bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white">
+        {Name}
+      </figcaption>
+    </figure>
+    <div class="mt-4 flex items-center justify-center gap-4  font-small">
+      {JobName}
+      <span>|</span>
+      <span class="flex items-center gap-2 font-bold font-semismall">
+        LV.
+        <span class='level-no'>
+          {Level.toString().split('').map(num => <span class={`level-no-${num}`} />)}
+        </span>
+      </span>
+    </div>
+  </header>
+  <span class="mt-4 block font-small pb-4 mb-4 border-b-2 border-solid border-[#c1a790]">{StreetName} - {MapName}</span>
   <div class="flex items-center justify-between w-full font-small">
     <span class="text-left">
       <span class='w-6 inline-block'>HP</span>
