@@ -19,6 +19,7 @@ const {
   MaxHP,
   MaxMP,
   Fame,
+  SkinColor,
   Rank,
   CreateDate,
   TotalPlayTime,
@@ -40,7 +41,7 @@ const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
   <header>
     <figure class='grid justify-items-center'>
       <img
-        src={`https://maplestory.io/api/character/{itemId:2000,version:240},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:12000,version:240}/stand1/animated?resize=1&renderMode=default&flipX=true`}
+        src={`https://maplestory.io/api/character/{itemId:${2000+ SkinColor},version:64},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:${12000+SkinColor},version:64}/stand1/animated?resize=1&renderMode=default&flipX=true`}
         alt=""
         loading="lazy"
       />

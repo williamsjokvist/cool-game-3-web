@@ -18,6 +18,7 @@ export type CharacterModel = {
   Meso: number;
   Job: number;
   JobName: string;
+  SkinColor: string;
   Fame: number;
   Face: number,
   Hair: number;
