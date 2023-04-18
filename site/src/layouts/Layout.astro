@@ -1,7 +1,7 @@
 ---
 import "../style/style.scss";
 import "../style/fonts.sass";
-import { Spa } from "astro-spa";
+// import { Spa } from "astro-spa";
 import { Picture } from "@astrojs/image/components";
 import Nav from "../components/Nav.astro";
 
@@ -22,12 +22,6 @@ export interface Props {
 
 const { title } = Astro.props;
 ---
-
-<script>
-  import { inject } from "@vercel/analytics";
-
-  inject();
-</script>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -37,13 +31,13 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <Spa
+    {/*<Spa
       defaultAnimation={false}
       progressBarOptions={{
         height: '5px',
         secondary: true
       }}
-    />
+    />*/}
     <p
       id="notice"
       style='font-family:"Pixelated Arial"'
