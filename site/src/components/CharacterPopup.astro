@@ -35,26 +35,26 @@ const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
     class="bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white"
     >{Name}</span
   ><br /><br />
-  <div class="flex items-center justify-center gap-2 text-sm">
+  <div class="flex items-center justify-center gap-2 font-semismall">
     {JobName}
     <span>|</span>
     <span class="font-bold">LV.</span>
-    <span>
+    <span class='level-no'>
       {
         Level.toString()
           .split("")
-          .map((num: string) => <span class={`level-no level-no-${num}`} />)
+          .map((num: string) => <span class={`level-no-${num}`} />)
       }
     </span>
   </div>
   <br />
-  <span class="block text-xs pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
+  <span class="block font-small pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
     >{StreetName} - {MapName}</span
   >
 
-  <div class="flex items-center justify-between w-full text-sm">
-    <span class="w-full text-left">
-      HP
+  <div class="flex items-center justify-between w-full font-small">
+    <span class="text-left">
+      <span class='w-6 inline-block'>HP</span>
       <span class="ml-2 text-[#95c634]">
         [<span class="text-black">{HP}/{MaxHP}</span>]
       </span>
@@ -69,9 +69,9 @@ const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
       </div>
     </div>
   </div>
-  <div class="mt-2 flex items-center justify-between w-full text-sm">
-    <span class="flex items-center">
-      MP
+  <div class="mt-2 flex items-center justify-between w-full font-small">
+    <span class="text-left">
+      <span class='w-6 inline-block'>MP</span>
       <span class="ml-2 text-[#95c634]">
         [<span class="text-black">{MP}/{MaxMP}</span>]
       </span>
@@ -88,10 +88,10 @@ const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
   </div>
 
   <div
-    class="mt-2 flex items-center justify-between w-full text-sm pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
+    class="mt-2 flex items-center justify-between w-full font-small pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
   >
-    <span class="flex items-center">
-      EXP
+    <span class="text-left">
+      <span class='w-6 inline-block'>EXP</span>
       <span class="ml-2 text-[#95c634]">
         [<span class="text-black">{expPercentage}</span>]
       </span>
@@ -103,7 +103,7 @@ const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
     </div>
   </div>
   <dl
-    class="font-sans pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
+    class="font-sans font-medium pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
   >
     <div class="flex gap-8 w-full justify-between mb-1">
       <div class="flex gap-4 w-full justify-between px-2">
@@ -136,10 +136,10 @@ const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
       </div>
     </div>
   </dl>
-  <span class="text-xs block mb-2"
+  <span class="font-small block leading-none mb-2"
     >Created on: <time datetime={CreateDate}>{CreateDate.slice(0, 10)}</time
     ></span
   >
-  <span class="text-xs block mb-2">Total Play Time: {playTimeHrs + ' hrs'}</span>
+  <span class="font-small block leading-none mb-2">Total Play Time: {playTimeHrs + ' hrs'}</span>
 
 </section>

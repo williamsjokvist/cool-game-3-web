@@ -100,41 +100,42 @@ code {
   );
 
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.register-btn::before {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 4px;
-  width: calc(100% - 8px);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.25);
-  height: 8px;
-}
 
-.register-btn #sign-up-text text {
-  fill: transparent;
-  stroke: #fff;
-  stroke-width: 3px;
-  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+  &:hover {
+    filter: brightness(1.075);
+  }
+  &:hover svg:first-of-type {
+    transform: translateY(-2px);
+  }
+  &:hover svg {
+    filter: drop-shadow(0px 0px 8px #cbf1ff);
+  }
+  &:hover #sign-up-text text {
+    fill: #fff;
+    stroke: transparent;
+  }
 
-.register-btn svg {
-  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+  svg {
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
 
-.register-btn:hover {
-  filter: brightness(1.075);
-}
-.register-btn:hover svg:first-of-type {
-  transform: translateY(-2px);
-}
-.register-btn:hover svg {
-  filter: drop-shadow(0px 0px 8px #cbf1ff);
-}
-.register-btn:hover #sign-up-text text {
-  fill: #fff;
-  stroke: transparent;
+  #sign-up-text text {
+    fill: transparent;
+    stroke: #fff;
+    stroke-width: 3px;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    width: calc(100% - 8px);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.25);
+    height: 8px;
+  }
 }
 
 .error-msg:first-letter {
@@ -144,8 +145,7 @@ code {
 .thumbs-up-icon {
   width: 48px;
   height: 48px;
-  background: url('https://api.iconify.design/fluent-emoji/thumbs-up.svg') no-repeat center center / contain;
-  
+  background: url('https://api.iconify.design/fluent-emoji/thumbs-up.svg') no-repeat center center / contain;  
 }
 
 .text-shad {
@@ -153,14 +153,18 @@ code {
 }
 
 .level-no {
-  background-image: url('/levelno.png');
-  background-size: 220px 26px;
-  background-repeat: no-repeat;
-  display: inline-block;
-  image-rendering: pixelated;
-  width: 22px;
   height: 26px;
-  margin-right: 2px;
+
+  > * {
+    background-image: url('/levelno.png');
+    background-size: 220px 26px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    image-rendering: pixelated;
+    width: 22px;
+    height: 26px;
+    margin-right: 2px;
+  }
 }
 
 .level-no-0 {

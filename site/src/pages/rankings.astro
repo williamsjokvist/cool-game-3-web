@@ -94,7 +94,7 @@ const characters = await getRankings();
           <table id="rankings" class="mx-auto mt-8">
             <thead>
               <tr>
-                <th class="text-center font-bold px-4"><button type='button' class='text-center w-full hover:underline'>#</button></th>
+                <th class="text-center font-bold px-4"><button type='button' class='text-center w-full hover:underline'>Overall Rank</button></th>
                 <th class="text-left font-bold px-4"><button type='button' class='hover:underline'>Name</button></th>
                 <th class="text-left font-bold px-4"><button type='button' class='hover:underline'>LV</button></th>
                 <th class="text-left font-bold px-4"><button type='button' class='hover:underline'>Job</button></th>
@@ -123,7 +123,7 @@ const characters = await getRankings();
 
                 return (
                   <tr class="relative group even:bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.125)]">
-                    <td class="text-right px-4 py-2" data-number={Rank}>#{Rank}</td>
+                    <td class="rank text-center px-4 py-2" data-number={Rank}>#{Rank}</td>
                     <td class="text-left px-4 py-2 text-base font-arial">
                       <span class='bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white'>
                         {Name}          
@@ -131,11 +131,13 @@ const characters = await getRankings();
                       <CharacterPopup character={character} />
                     </td>
                     <td class="text-left px-4 py-2 font-bold text-base font-arial" aria-label={`Level ${Level}`} data-number={Level}>
-                      {Level.toString()
-                        .split("")
-                        .map((num: string) => (
-                          <span class={`level-no level-no-${num}`} />
-                        ))}
+                      <span class='level-no'>
+                        {
+                          Level.toString()
+                          .split('')
+                          .map(num => <span class={`level-no-${num}`} />)
+                        }  
+                      </span>
                     </td>
                     <td class="text-left px-4 py-2">{JobName}</td>
                     <td class="text-left px-4 py-2" data-number={((Exp / ExpRequired) * 100).toFixed(2)}>
@@ -159,3 +161,17 @@ const characters = await getRankings();
     </section>
   </main>
 </Layout>
+
+<style lang='sass'>
+  #rankings
+    counter-reset: count
+
+  #rankings tbody tr
+    counter-increment: count 1
+
+  #rankings .rank::before
+    content: "#" counter(count, decimal)
+    position: absolute
+    left: -68px
+    color: #5372ce
+</style>
