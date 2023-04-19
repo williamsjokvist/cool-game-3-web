@@ -18,7 +18,7 @@ type ExpTable struct {
 
 var expTable map[int]int
 
-func InitializeExpTable() {
+func initializeExpTable() {
 	expTable = make(map[int]int)
 	file, err := ioutil.ReadFile("./db/exp-table.json")
 	if err != nil {

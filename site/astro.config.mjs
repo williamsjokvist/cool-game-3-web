@@ -13,6 +13,6 @@ export default defineConfig({
     port: import.meta.env.PORT
   },
   adapter: vercel({
-    analytics: true
+    analytics: false
   })
 });

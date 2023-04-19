@@ -1,13 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Icon from "astro-icon";
-
 import yup from "yup";
-import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import { createAccount } from '../proto/cool-game-web'
 
 let errorMessages: string[] = [];
-
 let isSuccess: boolean = false;
 
 if (Astro.request.method === "POST") {
@@ -23,48 +21,30 @@ if (Astro.request.method === "POST") {
   try {
     const data = await Astro.request.formData();
     const body = Object.fromEntries(data.entries());
-
     const name = data.get("name");
     const email = data.get("email");
     const password = data.get("password");
     const retypePassword = data.get("retypePassword");
-
     const birthday = data.get("birthday");
     const discordUsername = data.get("discordUsername");
-
     await RegistrationSchema.validate(body).catch((result) => {
-      const { name, errors } = result;
+      const { errors } = result;
       errorMessages = errors;
-      console.log(errorMessages)
     });
 
     if (password !== retypePassword)
       errorMessages.push("Passwords do not match");
 
     if (errorMessages.length == 0) {
-      // Make request to the api
-      try {
-        const res = await fetch(`${import.meta.env.SERVER_URL}/account`, {
-          method: "post",
-          body: JSON.stringify({
-            name,
-            email,
-            password,
-            birthday,
-            discordUsername,
-          }),
-        });
-
-        if (!res.ok) {
-          console.log("Failed to create account");
-        }
-
-        const json = await res.json();
-        console.log(json);
-        isSuccess = true;
-      } catch (error) {
-        console.log(error);
-        isSuccess = false;
+      isSuccess = await createAccount({
+        Name: name as string,
+        Email: email as string,
+        Password: password as string,
+        Birthday: birthday as string,
+        DiscordUsername: discordUsername as string
+      })
+      if (!isSuccess) {
+        errorMessages.push("An error occurred while creating your account");
       }
     }
   } catch (error) {

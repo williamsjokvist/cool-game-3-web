@@ -29,11 +29,12 @@ services:
     volumes:
       - ./site/public:/cg3-site/public
       - ./site/src:/cg3-site/src
+      - ./site/src/proto:/cg3-site/src/proto
       - ./site/tsconfig.json:/cg3-site/tsconfig.json
       - ./site/astro.config.mjs:/cg3-site/astro.config.mjs
     environment:
       CHOKIDAR_USE_POLLING: false
-      SERVER_URL: http://cg3_web_api:9090
+      SERVER_URL: cg3_web_api:9090
       PORT: 3000
     networks:
       - cg3-network

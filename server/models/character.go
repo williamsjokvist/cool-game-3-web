@@ -1,7 +1,10 @@
 package models
 
 type Character struct {
-	Id                            int    `db:"id"`
+	StreetName                    string
+	MapName                       string
+	JobName                       string
+	ExpRequired                   int
 	Account                       int    `db:"accountid"`
 	World                         bool   `db:"world"`
 	Name                          string `db:"name"`
@@ -10,25 +13,21 @@ type Character struct {
 	Str                           int    `db:"str"`
 	Dex                           int    `db:"dex"`
 	Int                           int    `db:"int"`
-	Luk                           int    `db:"luk"`
+	Luk                           int32  `db:"luk"`
 	HP                            int    `db:"hp"`
 	MP                            int    `db:"mp"`
 	MaxHP                         int    `db:"maxhp"`
 	MaxMP                         int    `db:"maxmp"`
 	Meso                          int    `db:"meso"`
 	Job                           int    `db:"job"`
-	JobName                       string
-	SkinColor                     int  `db:"skincolor"`
-	Gender                        bool `db:"gender"`
-	Fame                          int  `db:"fame"`
-	Face                          int  `db:"face"`
-	Hair                          int  `db:"hair"`
-	AP                            int  `db:"ap"`
-	SP                            int  `db:"sp"`
-	Map                           int  `db:"map"`
-	StreetName                    string
-	MapName                       string
-	ExpRequired                   int
+	SkinColor                     int    `db:"skincolor"`
+	Gender                        bool   `db:"gender"`
+	Fame                          int    `db:"fame"`
+	Face                          int    `db:"face"`
+	Hair                          int    `db:"hair"`
+	AP                            int    `db:"ap"`
+	SP                            int    `db:"sp"`
+	Map                           int    `db:"map"`
 	SpawnPoint                    int    `db:"spawnpoint"`
 	Party                         int    `db:"party"`
 	BuddyCapacity                 int    `db:"buddyCapacity"`
@@ -86,4 +85,5 @@ type Character struct {
 	QuestsCompleted               int    `db:"questsCompleted"`
 	HideFromRankings              int    `db:"hideFromRankings"`
 	IsOn1xEXP                     int    `db:"isOn1xEXP"`
+	Id                            int    `db:"id"`
 }

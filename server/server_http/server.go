@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -29,7 +28,6 @@ func initializeConfig() {
 	configFile, err := ioutil.ReadFile("./config.toml")
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 
 	if _, err := toml.Decode(string(configFile), &Config); err != nil {
@@ -37,33 +35,25 @@ func initializeConfig() {
 	}
 }
 
-func connectToDatabase(url string) (*sqlx.DB, error) {
-	connStr := url
-
+func connectToDatabase() *sqlx.DB {
+	connStr := Config.MysqlUrl
 	if connStr == "" {
-		return nil, errors.New("mysql_url is missing from the config file")
+		log.Fatal("mysql_url is missing from the config file")
 	}
-
 	db, err := sqlx.Open("mysql", connStr)
-
-	return db, err
+	if err != nil {
+		log.Fatalf("failed to connect to database: %v", err)
+	} else {
+		fmt.Println("connected to database")
+	}
+	return db
 }
 
 func CreateServer() *Server {
 	initializeConfig()
-	db, err := connectToDatabase(Config.MysqlUrl)
-
-	if err != nil {
-		log.Fatal(err)
-	} else {
-		fmt.Println("Connected to database")
-	}
-
-	router := gin.Default()
-
 	return &Server{
-		db:     db,
-		router: router,
+		db:     connectToDatabase(),
+		router: gin.Default(),
 	}
 }
 
@@ -91,7 +81,6 @@ func (s *Server) Run() {
 
 	if Config.Port == 0 {
 		log.Fatal("port is missing from the config file")
-		return
 	}
 
 	port := fmt.Sprintf(":%v", Config.Port)

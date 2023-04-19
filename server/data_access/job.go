@@ -19,7 +19,7 @@ type JobList struct {
 
 var jobMap map[int]string
 
-func InitializeJobs() {
+func initializeJobs() {
 	jobMap = make(map[int]string)
 	file, err := ioutil.ReadFile("./db/jobs.json")
 	if err != nil {

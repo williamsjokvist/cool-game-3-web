@@ -84,4 +84,5 @@ export type CharacterModel = {
   QuestsCompleted: number;
   HideFromRankings: number;
   IsOn1xEXP: number;
+  EquippedItems: number[];
 }
