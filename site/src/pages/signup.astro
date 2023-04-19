@@ -77,8 +77,8 @@ if (Astro.request.method === "POST") {
 ---
 
 <Layout title="Cool Game 3 - Signup">
-  <main class='text-[#125149]'>
-    <h1 class="mt-8 text-4xl font-bold mb-8 text-center">Sign up</h1>
+  <main class='text-white'>
+    <h1 class="bg-white text-black mx-auto my-12 max-w-xl rounded-md m-1 font-arial py-1 px-2 text-base flex gap-4 items-center justify-between">Sign up</h1>
     {
       isSuccess && (
         <section class="text-center text-2xl error-box mb-8">
@@ -125,7 +125,7 @@ if (Astro.request.method === "POST") {
                 minlength="4"
                 maxlength="12"
                 placeholder="CoolGamer3"
-                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.125)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
 
@@ -138,7 +138,7 @@ if (Astro.request.method === "POST") {
                 name="discordUsername"
                 id="discordUsername"
                 placeholder="CoolGamer3#69420"
-                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.125)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
 
@@ -151,7 +151,7 @@ if (Astro.request.method === "POST") {
                 name="birthday"
                 id="birthday"
                 value="2003-01-01"
-                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.125)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
 
@@ -166,7 +166,7 @@ if (Astro.request.method === "POST") {
                 maxlength="12"
                 minlength="4"
                 placeholder="********"
-                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.125)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
             <div class="flex items-center justify-between gap-4 mb-4">
@@ -180,7 +180,7 @@ if (Astro.request.method === "POST") {
                 maxlength="12"
                 minlength="4"
                 placeholder="********"
-                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.125)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
             <div class="flex items-center justify-between gap-4 mb-4">
@@ -192,7 +192,7 @@ if (Astro.request.method === "POST") {
                 name="email"
                 id="email"
                 placeholder="coolgamer3@hotmail.com"
-                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.125)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
             <button
