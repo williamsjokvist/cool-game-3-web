@@ -62,6 +62,7 @@ message Character {
   int32 TotalPlayTime = 25;
   bool Islander = 26;
   string CreateDate = 27;
+  repeated int32 EquippedItems = 28;
 }
 
 message Characters {

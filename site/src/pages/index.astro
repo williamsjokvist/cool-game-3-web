@@ -27,12 +27,15 @@ const onlineCharacters = await getCharacters({
                   SkinColor,
                   Face,
                   Hair,
+                  EquippedItems
                 } = character;
+
+                const equips = EquippedItems.map(itemId => `{itemId:${itemId},version:64}`).join(',')
 
                 return (
                 <figure class='relative group grid justify-items-center items-end'>
                   <img
-                    src={`https://maplestory.io/api/character/{itemId:${2000+ SkinColor},version:64},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:${12000+SkinColor},version:64}/stand1/animated?resize=1&renderMode=default&flipX=true`}
+                    src={`https://maplestory.io/api/character/{itemId:${2000+ SkinColor},version:64},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:${12000+SkinColor},version:64},${equips}/stand1/animated?resize=1&renderMode=default&flipX=true`}
                     alt=""
                     loading="lazy"
                   />

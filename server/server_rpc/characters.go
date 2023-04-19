@@ -18,41 +18,27 @@ func (s *Server) GetCharacters(ctx context.Context, in *pb.GetCharacterParams) (
 		}
 	}())
 
-	query := fmt.Sprintf(`
-		SELECT 
-			name, 
-			level, 
-			exp, 
-			str, 
-			dex, 
-			luk, 
-			fame,
-			loggedIn, 
-			siteOverallRank,
-			siteJobRank, 
-			siteOddJobRank,
-			rank, 
-			rankMove, 
-			jobRank, 
-			hp, 
-			mp, 
-			characters.int, 
-			map, 
-			maxmp, 
-			maxhp, 
-			meso, 
-			job, 
-			totalPlayTime, 
-			rank, 
-			hair, 
-			face, 
-			skincolor, 
-			gender, 
-			createdate
-	FROM characters WHERE loggedIn = %v AND hideFromRankings = 0 ORDER BY rank ASC`, onlyOnline)
+	charQuery := fmt.Sprintf(`
+		SELECT * FROM characters 
+		WHERE loggedIn = %s  
+		AND hideFromRankings = 0 
+		ORDER BY rank ASC
+	`, onlyOnline)
 
-	characters := []models.Character{}
-	err := s.db.Select(&characters, query)
+	chars := []models.Character{}
+	err := s.db.Select(&chars, charQuery)
+
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	equippedItems := []models.InventoryItem{}
+	err = s.db.Select(&equippedItems, `
+		SELECT * FROM inventoryitems
+		WHERE inventoryitems.inventorytype = -1 
+	`)
+
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -60,11 +46,21 @@ func (s *Server) GetCharacters(ctx context.Context, in *pb.GetCharacterParams) (
 
 	pbCharacters := []*pb.Character{}
 
-	for i := 0; i < len(characters); i++ {
-		dbChar := characters[i]
+	for i := 0; i < len(chars); i++ {
+		dbChar := chars[i]
+
+		// Attach equipped items
+		equippedItemsIds := []int32{}
+		for j := 0; j < len(equippedItems); j++ {
+			if equippedItems[j].CharacterID == dbChar.Id {
+				equippedItemsIds = append(equippedItemsIds, int32(equippedItems[j].ItemId))
+			}
+		}
+
 		mapInfo := data.GetMapInfo(dbChar.Map)
 
 		pbChar := pb.Character{
+			EquippedItems: equippedItemsIds,
 			StreetName:    mapInfo.StreetName,
 			MapName:       mapInfo.MapName,
 			Name:          dbChar.Name,

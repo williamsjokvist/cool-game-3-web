@@ -5,7 +5,6 @@ type Character struct {
 	MapName                       string
 	JobName                       string
 	ExpRequired                   int
-	Id                            int    `db:"id"`
 	Account                       int    `db:"accountid"`
 	World                         bool   `db:"world"`
 	Name                          string `db:"name"`
@@ -86,4 +85,5 @@ type Character struct {
 	QuestsCompleted               int    `db:"questsCompleted"`
 	HideFromRankings              int    `db:"hideFromRankings"`
 	IsOn1xEXP                     int    `db:"isOn1xEXP"`
+	Id                            int    `db:"id"`
 }
