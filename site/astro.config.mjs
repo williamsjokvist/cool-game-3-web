@@ -13,6 +13,7 @@ export default defineConfig({
     port: import.meta.env.PORT
   },
   adapter: vercel({
-    analytics: false
+    analytics: false,
+    includeFiles: ['./src/proto/cool-game-web.proto']
   })
 });
