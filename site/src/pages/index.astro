@@ -22,17 +22,17 @@ const onlineCharacters = await getCharacters({
           </h2>
           <div class='flex flex-wrap gap-10 justify-center mx-auto mt-6'>
             {onlineCharacters.map(character => {
-                const {
-                  Name,
-                  SkinColor,
-                  Face,
-                  Hair,
-                  EquippedItems
-                } = character;
+              const {
+                Name,
+                SkinColor,
+                Face,
+                Hair,
+                EquippedItems
+              } = character;
 
-                const equips = EquippedItems.map(itemId => `{itemId:${itemId},version:64}`).join(',')
+              const equips = EquippedItems.map(itemId => `{itemId:${itemId},version:64}`).join(',')
 
-                return (
+              return (
                 <figure class='relative group grid justify-items-center items-end'>
                   <img
                     src={`https://maplestory.io/api/character/{itemId:${2000+ SkinColor},version:64},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:${12000+SkinColor},version:64},${equips}/stand1/animated?resize=1&renderMode=default&flipX=true`}

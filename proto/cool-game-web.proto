@@ -59,7 +59,7 @@ message Character {
   int32 Rank = 22;
   bool Married = 23;
   int32 LoggedIn = 24;
-  int32 TotalPlayTime = 25;
+  int64 TotalPlayTime = 25;
   bool Islander = 26;
   string CreateDate = 27;
   repeated int32 EquippedItems = 28;

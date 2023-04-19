@@ -10,20 +10,19 @@ import (
 )
 
 func (s *Server) GetCharacters(ctx context.Context, in *pb.GetCharacterParams) (*pb.Characters, error) {
-	onlyOnline := fmt.Sprintf("%d", func() int {
+	charWhere := fmt.Sprintf("%s", func() string {
 		if in.IsOnline {
-			return 1
+			return "WHERE loggedIn != 0 AND hideFromRankings = 0"
 		} else {
-			return 0
+			return "WHERE hideFromRankings = 0"
 		}
 	}())
 
 	charQuery := fmt.Sprintf(`
 		SELECT * FROM characters 
-		WHERE loggedIn = %s  
-		AND hideFromRankings = 0 
+		%s  
 		ORDER BY rank ASC
-	`, onlyOnline)
+	`, charWhere)
 
 	chars := []models.Character{}
 	err := s.db.Select(&chars, charQuery)
@@ -36,7 +35,7 @@ func (s *Server) GetCharacters(ctx context.Context, in *pb.GetCharacterParams) (
 	equippedItems := []models.InventoryItem{}
 	err = s.db.Select(&equippedItems, `
 		SELECT * FROM inventoryitems
-		WHERE inventoryitems.inventorytype = -1 
+		WHERE inventorytype = -1 
 	`)
 
 	if err != nil {
@@ -48,6 +47,10 @@ func (s *Server) GetCharacters(ctx context.Context, in *pb.GetCharacterParams) (
 
 	for i := 0; i < len(chars); i++ {
 		dbChar := chars[i]
+
+		if dbChar.Name == "AnnCharlotte" {
+			fmt.Println("AnnCharlotte", dbChar)
+		}
 
 		// Attach equipped items
 		equippedItemsIds := []int32{}
@@ -74,7 +77,7 @@ func (s *Server) GetCharacters(ctx context.Context, in *pb.GetCharacterParams) (
 			Luk:           int32(dbChar.Luk),
 			Fame:          int32(dbChar.Fame),
 			LoggedIn:      int32(dbChar.LoggedIn),
-			TotalPlayTime: int32(dbChar.TotalPlayTime),
+			TotalPlayTime: int64(dbChar.TotalPlayTime),
 			HP:            int32(dbChar.HP),
 			MP:            int32(dbChar.MP),
 			MaxHP:         int32(dbChar.MaxHP),
