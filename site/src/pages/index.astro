@@ -1,29 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-import { CharacterModel } from "../types/character";
 import CharacterPopup from "../components/CharacterPopup.astro";
 import Footer from "../components/Footer.astro";
-
-let onlineCharacters: CharacterModel[] = [];
-
-const getOnlineCharacters = async () => {
-  try {
-    const res = await fetch(`${import.meta.env.SERVER_URL}/characters/online`);
-    if (!res.ok) {
-      console.log("Failed to fetch online characters");
-    }
-
-    const body = await res.json();
-    onlineCharacters = body;
-  } catch (err) {
-    console.log("Failed to fetch online characters");
-  }
-
-  return onlineCharacters;
-};
-
-await getOnlineCharacters();
+import { getCharacters } from "../proto/cool-game-web";
+const onlineCharacters = await getCharacters({
+  isOnline: true,
+  limit: 0,
+  offset: 0
+})
 ---
 
 <Layout title="Cool Game 3">

@@ -1,59 +1,37 @@
-package routers
+package routers_rpc
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
-	"net/http"
 
 	"github.com/GreenSoap/cool-game-3-web/models"
-	"github.com/gin-gonic/gin"
+	pb "github.com/GreenSoap/cool-game-3-web/proto"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (s *Server) AttachAccountRoutes(routerGroup *gin.RouterGroup) {
-	accountGroup := routerGroup.Group("/account")
-	accountGroup.POST("/", s.createAccount)
-}
-
-type AccountCreationBody struct {
-	Name            string `json:"name"`
-	Password        string `json:"password"`
-	Email           string `json:"email"`
-	Birthday        string `json:"birthday"`
-	DiscordUsername string `json:"discordUsername"`
-}
-
-// Hash password using the bcrypt hashing algorithm
 func hashPassword(password string) (string, error) {
 	var passwordBytes = []byte(password)
 	hashedPasswordBytes, err := bcrypt.GenerateFromPassword(passwordBytes, bcrypt.MinCost)
 	return string(hashedPasswordBytes), err
 }
 
-func (s *Server) createAccount(ctx *gin.Context) {
-	var reqBody AccountCreationBody
-	err := ctx.BindJSON(&reqBody)
+func (s *Server) CreateAccount(ctx context.Context, in *pb.CreateAccountParams) (*pb.CreateAccountResponse, error) {
+	hashedPassword, err := hashPassword(in.Password)
+
+	isSuccess := true
 
 	if err != nil {
 		fmt.Println(err)
-		ctx.JSON(http.StatusBadRequest, "Error parsing account")
-		return
-	}
-
-	hashedPassword, err := hashPassword(reqBody.Password)
-
-	if err != nil {
-		fmt.Println(err)
-		ctx.JSON(http.StatusInternalServerError, "Error hashing password")
-		return
+		isSuccess = false
 	}
 
 	var account models.Account = models.Account{
-		Name:                  reqBody.Name,
+		Name:                  in.Name,
 		HashedPassword:        hashedPassword,
-		Email:                 sql.NullString{String: reqBody.Email, Valid: true},
-		Birthday:              reqBody.Birthday,
-		DiscordUsername:       sql.NullString{String: reqBody.DiscordUsername, Valid: true},
+		Email:                 sql.NullString{String: in.Email, Valid: true},
+		Birthday:              in.Birthday,
+		DiscordUsername:       sql.NullString{String: in.DiscordUsername, Valid: true},
 		GM:                    0,
 		WebAdmin:              false,
 		Banned:                false,
@@ -66,8 +44,6 @@ func (s *Server) createAccount(ctx *gin.Context) {
 		HighestVoteStreak:     0,
 		Mute:                  false,
 		Guest:                 false,
-		IP:                    ctx.ClientIP(),
-		LastKnownIP:           ctx.ClientIP(),
 		LoggedIn:              0,
 	}
 
@@ -118,9 +94,11 @@ func (s *Server) createAccount(ctx *gin.Context) {
 
 	if err != nil {
 		fmt.Println(err)
-		ctx.JSON(http.StatusInternalServerError, "Error creating account")
-		return
+		isSuccess = false
 	}
 
-	ctx.JSON(http.StatusOK, account)
+	return &pb.CreateAccountResponse{
+		Success: isSuccess,
+		Message: "Account created successfully",
+	}, nil
 }

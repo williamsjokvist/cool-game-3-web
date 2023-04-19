@@ -32,7 +32,7 @@ type MapInfo struct {
 
 var mapInfoMap map[int]MapInfo
 
-func InitializeMapData() {
+func initializeMapData() {
 
 	mapInfoMap = make(map[int]MapInfo)
 

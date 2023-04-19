@@ -1,27 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-import { CharacterModel } from "../types/character";
-import Nav from "../components/Nav.astro";
 import CharacterPopup from "../components/CharacterPopup.astro";
-
-const getRankings = async () => {
-  let characters: CharacterModel[] = [];
-  try {
-    const res = await fetch(`${import.meta.env.SERVER_URL}/characters`);
-    if (!res.ok) {
-      console.log("Failed to fetch rankings");
-    }
-
-    characters = await res.json();
-  } catch (err) {
-    console.log("Failed to fetch rankings");
-  }
-
-  return characters;
-};
-
-const characters = await getRankings();
+import { getCharacters } from "../proto/cool-game-web";
+const characters = await getCharacters({
+  isOnline: false,
+  limit: 0,
+  offset: 0
+})
 ---
 
 <script>
