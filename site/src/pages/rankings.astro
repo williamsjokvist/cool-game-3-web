@@ -87,9 +87,9 @@ const characters = await getRankings();
 </script>
 <Layout title="Cool Game 3 - Rankings">
   <main class="mt-12 pb-24">
-    <section class="text-white text-center">
-      <h2 class="text-xl md:text-2xl font-bold flex gap-4 items-center justify-center">Total Characters:  
-        <span class='level-no' style='filter: hue-rotate(94deg)'>
+    <section class="text-white">
+      <h2 class="bg-white text-[#235877] rounded-md m-1 font-arial py-1 px-2 text-base flex gap-4 items-center justify-between max-w-3xl mx-auto">Total Characters:  
+        <span class='level-no' style='filter: hue-rotate(175deg)'>
           {characters.length.toString().split('').map(num => <span class={`level-no-${num}`} />)}  
         </span>
       </h2>
@@ -126,7 +126,7 @@ const characters = await getRankings();
                 );
 
                 return (
-                  <tr class="relative group even:bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.125)]">
+                  <tr class="relative group text-[rgba(255,255,255,0.75)] hover:text-white even:bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.155)]">
                     <td class="rank text-center px-4 py-2" data-number={Rank}>#{Rank}</td>
                     <td class="text-left px-4 py-2 text-xs md:text-base font-arial">
                       <span class='text-[8px] sm:text-[12px] md:text-[16px] bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white'>

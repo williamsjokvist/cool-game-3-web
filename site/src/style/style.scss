@@ -18,12 +18,10 @@ html {
 }
 
 body {
-  background: #000;
   min-height: 100vh;
-  background: linear-gradient(0deg,
-      rgb(1, 1, 16) 0%,
-      rgb(18, 2, 23) 48%,
-      rgb(21, 14, 44) 100%);
+  /*background: linear-gradient(to bottom, #92FE9D, #00C9FF);*/
+  background: linear-gradient(0deg,rgb(1,1,16) 0%,rgb(18,2,23) 48%,rgb(21,14,44) 100%);
+  color: black;
   font-family: "Pixelated MS Sans Serif", Geneva, Tahoma, sans-serif;
 }
 
@@ -261,4 +259,8 @@ code {
       background-position-x: -99px;
     }
   }
+}
+
+.blue-gradient-top {
+  background: linear-gradient(to top, #1084ff 0%, #1084ff 10%, #128eff 11%, #128eff 20%, #1494ff 21%, #1494ff 30%, #1699ff 31%, #1699ff 40%, #189cff 41%, #189cff 50%, #1aa4ff 51%, #1aa4ff 60%, #1caaff 61%, #1caaff 70%, #20b0ff 71%, #24baff 80%, #24baff 81%, #27bfff 90%, #2ac6ff 91%, #2ac6ff 100%);
 }

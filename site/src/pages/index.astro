@@ -30,13 +30,13 @@ await getOnlineCharacters();
   <main class='mt-12'>
     {
       onlineCharacters && onlineCharacters.length > 0 && (
-        <section class="text-white text-center text-xl">
-          <h2 class="text-xl md:text-2xl font-bold flex gap-4 items-center justify-center">Players Online:  
+        <section class="rounded-xl text-black text-center text-xl max-w-2xl bg-[#efefef] border-[#5c7e9e] pb-6 mx-auto border-2 border-solid outline-white outline-none outline-2 outline-offset-0">
+          <h2 class="bg-white rounded-md m-1 font-arial py-1 px-2 text-base flex gap-4 items-center justify-between">Players Online
             <span class='level-no' style='filter: hue-rotate(94deg)'>
               {onlineCharacters.length.toString().split('').map(num => <span class={`level-no-${num}`} />)}  
             </span>
           </h2>
-          <div class='flex flex-wrap gap-10 max-w-xl justify-center mx-auto mt-8'>
+          <div class='flex flex-wrap gap-10 justify-center mx-auto mt-6'>
             {onlineCharacters.map(character => {
                 const {
                   Name,
@@ -52,7 +52,7 @@ await getOnlineCharacters();
                     alt=""
                     loading="lazy"
                   />
-                  <figcaption class="font-arial text-base mt-2 bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white">
+                  <figcaption class="text-white font-arial text-base mt-2 bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md">
                     {Name}
                   </figcaption>
                   <CharacterPopup character={character} />

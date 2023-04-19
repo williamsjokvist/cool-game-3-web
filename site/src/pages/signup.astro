@@ -77,17 +77,17 @@ if (Astro.request.method === "POST") {
 ---
 
 <Layout title="Cool Game 3 - Signup">
-  <main>
-    <h1 class="mt-8 text-4xl font-bold mb-8 text-white text-center">Sign up</h1>
+  <main class='text-[#125149]'>
+    <h1 class="mt-8 text-4xl font-bold mb-8 text-center">Sign up</h1>
     {
       isSuccess && (
         <section class="text-center text-2xl error-box mb-8">
-          <header class="flex items-center gap-4 text-white p-4 rounded-lg justify-center mx-auto font-bold">
+          <header class="flex items-center gap-4 p-4 rounded-lg justify-center mx-auto font-bold">
             <i class="thumbs-up-icon"/>
             <h2>Success!</h2>
           </header>
 
-          <p class="text-xl text-white error-msg">You may now log in</p>
+          <p class="text-xl error-msg">You may now log in</p>
         </section>
       )
     }
@@ -96,7 +96,7 @@ if (Astro.request.method === "POST") {
         <>
           {errorMessages && errorMessages.length > 0 && (
             <section class="text-center text-2xl error-box mb-8">
-              <header class="flex items-center gap-4 text-white p-4 rounded-lg justify-center mx-auto font-bold">
+              <header class="flex items-center gap-4 p-4 rounded-lg justify-center mx-auto font-bold">
                 <Icon
                   name="ic:baseline-warning-amber"
                   class="text-red-500 w-12 h-12"
@@ -105,14 +105,14 @@ if (Astro.request.method === "POST") {
               </header>
 
               {errorMessages.map((error) => (
-                <p class="text-xl text-white error-msg">{error}</p>
+                <p class="text-xl error-msg">{error}</p>
               ))}
             </section>
           )}
           <form
             method="post"
             action="/signup"
-            class="text-white text-center max-w-xl mx-auto mb-8 text-xl"
+            class="text-center max-w-xl mx-auto mb-8 text-xl"
           >
             <div class="flex items-center justify-between gap-4 mb-4">
               <label for="name" class="font-bold">
@@ -125,7 +125,7 @@ if (Astro.request.method === "POST") {
                 minlength="4"
                 maxlength="12"
                 placeholder="CoolGamer3"
-                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
 
@@ -138,7 +138,7 @@ if (Astro.request.method === "POST") {
                 name="discordUsername"
                 id="discordUsername"
                 placeholder="CoolGamer3#69420"
-                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
 
@@ -151,7 +151,7 @@ if (Astro.request.method === "POST") {
                 name="birthday"
                 id="birthday"
                 value="2003-01-01"
-                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
 
@@ -166,7 +166,7 @@ if (Astro.request.method === "POST") {
                 maxlength="12"
                 minlength="4"
                 placeholder="********"
-                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
             <div class="flex items-center justify-between gap-4 mb-4">
@@ -180,7 +180,7 @@ if (Astro.request.method === "POST") {
                 maxlength="12"
                 minlength="4"
                 placeholder="********"
-                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
             <div class="flex items-center justify-between gap-4 mb-4">
@@ -192,13 +192,13 @@ if (Astro.request.method === "POST") {
                 name="email"
                 id="email"
                 placeholder="coolgamer3@hotmail.com"
-                class="bg-[rgba(255,255,255,0.1)] max-w-xs w-full px-4 py-2 rounded-md"
+                class="bg-[rgba(255,255,255,0.25)] max-w-xs w-full px-4 py-2 rounded-md"
               />
             </div>
             <button
               type="submit"
               class="mt-8 flex items-center justify-center gap-3 text-xl register-btn mx-auto"
-              style="filter: hue-rotate(175deg)"
+              style="filter: hue-rotate(140deg)"
             >
               <Icon
                 name="raphael:power"
