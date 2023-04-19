@@ -48,10 +48,6 @@ func (s *Server) GetCharacters(ctx context.Context, in *pb.GetCharacterParams) (
 	for i := 0; i < len(chars); i++ {
 		dbChar := chars[i]
 
-		if dbChar.Name == "AnnCharlotte" {
-			fmt.Println("AnnCharlotte", dbChar)
-		}
-
 		// Attach equipped items
 		equippedItemsIds := []int32{}
 		for j := 0; j < len(equippedItems); j++ {

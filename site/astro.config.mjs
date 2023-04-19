@@ -14,6 +14,6 @@ export default defineConfig({
   },
   adapter: vercel({
     analytics: false,
-    includeFiles: ['./src/proto/cool-game-web.proto']
+    includeFiles: ['./src/proto/cool-game-web.proto', './src/proto/cool-game-web.ts']
   })
 });
