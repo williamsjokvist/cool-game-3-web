@@ -36,58 +36,30 @@ await getOnlineCharacters();
               {onlineCharacters.length.toString().split('').map(num => <span class={`level-no-${num}`} />)}  
             </span>
           </h2>
-          <table class="overflow-x-scroll mx-auto mt-8 text-sm md:text-xl">
-            <thead>
-              <tr>
-                <th class="text-left font-bold px-4 py-1">Name</th>
-                <th class="text-left font-bold px-4 py-1">LV</th>
-                <th class="text-left font-bold px-4 py-1">Job</th>
-                <th class="text-left font-bold px-4 py-1">EXP</th>
-                <th class="text-left font-bold px-4 py-1">Map</th>
-              </tr>
-            </thead>
-            <tbody>
-              {onlineCharacters.map(character => {
+          <div class='flex flex-wrap gap-10 max-w-xl justify-center mx-auto mt-8'>
+            {onlineCharacters.map(character => {
                 const {
-                  Rank,
                   Name,
-                  Level,
-                  JobName,
-                  Exp,
-                  ExpRequired,
-                  TotalPlayTime,
-                  Meso,
-                  Fame,
-                  StreetName,
-                  MapName
+                  SkinColor,
+                  Face,
+                  Hair,
                 } = character;
-                const playTimeHrs = Math.floor(
-                  TotalPlayTime / 1000 / (60 * 60)
-                );
 
                 return (
-                  <tr class="relative group even:bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.125)]">
-                    <td class="text-left px-4 py-2 text-xs md:text-base font-arial">
-                      <span class='text-[8px] sm:text-[12px] md:text-[16px] bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white'>
-                        {Name}          
-                      </span>
-                      <CharacterPopup character={character} />
-                    </td>
-                    <td class='px-4' aria-label={`Level ${Level}`} data-number={Level}>
-                      <span class='level-no'>
-                        {Level.toString().split('').map(num => <span class={`level-no-${num}`} />)}  
-                      </span>
-                    </td>
-                    <td class="text-left px-4 py-2 whitespace-nowrap">{JobName}</td>
-                    <td class="text-left px-4 py-2 whitespace-nowrap" data-number={((Exp / ExpRequired) * 100).toFixed(2)}>
-                      {((Exp / ExpRequired) * 100).toFixed(2)}%
-                    </td> 
-                    <td class="text-left px-4 py-2 whitespace-nowrap">{StreetName} - {MapName}</td>
-
-                  </tr>)}
+                <figure class='relative group grid justify-items-center items-end'>
+                  <img
+                    src={`https://maplestory.io/api/character/{itemId:${2000+ SkinColor},version:64},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:${12000+SkinColor},version:64}/stand1/animated?resize=1&renderMode=default&flipX=true`}
+                    alt=""
+                    loading="lazy"
+                  />
+                  <figcaption class="mt-2 bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white">
+                    {Name}
+                  </figcaption>
+                  <CharacterPopup character={character} />
+                </figure>
                 )}
-            </tbody>
-          </table>
+              )}
+          </div>
         </section>
       )
     }
