@@ -1,1 +1,0 @@
-#rankings:where(.astro-YJ2Q2723){counter-reset:count}#rankings:where(.astro-YJ2Q2723) tbody:where(.astro-YJ2Q2723) tr:where(.astro-YJ2Q2723){counter-increment:count 1}#rankings:where(.astro-YJ2Q2723) .rank:where(.astro-YJ2Q2723):before{content:"#" counter(count,decimal);position:absolute;left:-68px;color:#5372ce}
