@@ -34,16 +34,16 @@ const equips = EquippedItems.map(itemId => `{itemId:${itemId},version:64}`).join
 ---
 
 <section
-  class="text-xs md:text-base font-arial min-w-[320px] text-center group-hover:block hidden bg-[#e4e1d4] text-black border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur absolute z-50 top-[-240px] left-[15px] md:left-[150px] px-4 py-2 rounded-lg"
+  class="popup-gradient text-xs md:text-base font-arial min-w-[403px] text-center group-hover:block hidden text-[#031532] border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur absolute z-50 top-[-240px] left-[15px] md:left-[150px] px-4 py-2 rounded-lg"
 >
   <header>
-    <figure class='grid justify-items-center'>
+    <figure class='avatar-box grid justify-items-center'>
       <img
         src={`https://maplestory.io/api/character/{itemId:${2000+ SkinColor},version:64},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:${12000+SkinColor},version:64},${equips}/stand1/animated?resize=1&renderMode=default&flipX=true`}
         alt=""
         loading="lazy"
       />
-      <figcaption class="mt-2 bg-[#5479c4] border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white">
+      <figcaption class="blue-gradient-top mt-2 border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white">
         {Name}
       </figcaption>
     </figure>
@@ -58,11 +58,11 @@ const equips = EquippedItems.map(itemId => `{itemId:${itemId},version:64}`).join
       </span>
     </div>
   </header>
-  <span class="mt-4 block font-small pb-4 mb-4 border-b-2 border-solid border-[#c1a790]">{StreetName} - {MapName}</span>
+  <span class="whitespace-nowrap overflow-hidden text-ellipsis mt-4 block font-small pb-4 mb-4 border-b-2 border-solid border-[#5c7e9e]">{StreetName} - {MapName}</span>
   <div class="flex items-center justify-between w-full font-small">
     <span class="text-left">
-      <span class='w-6 inline-block'>HP</span>
-      <span class="ml-2 text-[#95c634]">
+      <span class='stat stat-hp inline-block' aria-label='HP'></span>
+      <span class="align-top ml-2 text-[#95c634]">
         [<span class="text-black">{HP}/{MaxHP}</span>]
       </span>
     </span>
@@ -76,10 +76,10 @@ const equips = EquippedItems.map(itemId => `{itemId:${itemId},version:64}`).join
       </div>
     </div>
   </div>
-  <div class="mt-2 flex items-center justify-between w-full font-small">
+  <div class="flex items-center justify-between w-full font-small">
     <span class="text-left">
-      <span class='w-6 inline-block'>MP</span>
-      <span class="ml-2 text-[#95c634]">
+      <span class='stat stat-mp inline-block' aria-label='MP'></span>
+      <span class="align-top ml-2 text-[#95c634]">
         [<span class="text-black">{MP}/{MaxMP}</span>]
       </span>
     </span>
@@ -95,11 +95,11 @@ const equips = EquippedItems.map(itemId => `{itemId:${itemId},version:64}`).join
   </div>
 
   <div
-    class="mt-2 flex items-center justify-between w-full font-small pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
+    class="flex items-center justify-between w-full font-small pb-4 mb-4 border-b-2 border-solid border-[#5c7e9e]"
   >
     <span class="text-left">
-      <span class='w-6 inline-block'>EXP</span>
-      <span class="ml-2 text-[#95c634]">
+      <span class='stat stat-exp inline-block' aria-label='EXP'></span>
+      <span class="align-top ml-2 text-[#95c634]">
         [<span class="text-black">{expPercentage}</span>]
       </span>
     </span>
@@ -110,36 +110,36 @@ const equips = EquippedItems.map(itemId => `{itemId:${itemId},version:64}`).join
     </div>
   </div>
   <dl
-    class="font-sans font-medium pb-4 mb-4 border-b-2 border-solid border-[#c1a790]"
+    class="font-sans font-medium pb-4 mb-4 border-b-2 border-solid border-[#5c7e9e]"
   >
-    <div class="flex gap-8 w-full justify-between mb-1">
-      <div class="flex gap-4 w-full justify-between px-2">
-        <dt class="text-[#633c2f]">RANK</dt>
-        <dd>#{Rank}</dd>
+    <div class="w-full">
+      <div class="inline-block mr-[2px]">
+        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-rank" aria-label='Rank'></dt>
+        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>#{Rank}</dd>
       </div>
-      <div class="flex gap-4 w-full justify-between px-2">
-        <dt class="text-[#633c2f]">FAME</dt>
-        <dd>{Fame}</dd>
-      </div>
-    </div>
-    <div class="flex gap-8 w-full justify-between mb-1">
-      <div class="flex gap-4 w-full justify-between px-2">
-        <dt class="text-[#633c2f]">STR</dt>
-        <dd>{Str}</dd>
-      </div>
-      <div class="flex gap-4 w-full justify-between px-2">
-        <dt class="text-[#633c2f]">DEX</dt>
-        <dd>{Dex}</dd>
+      <div class="inline-block">
+        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-fame" aria-label='Fame'></dt>
+        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>{Fame}</dd>
       </div>
     </div>
-    <div class="flex gap-8 w-full justify-between">
-      <div class="flex gap-4 w-full justify-between px-2">
-        <dt class="text-[#633c2f]">LUK</dt>
-        <dd>{Luk}</dd>
+    <div class="w-full">
+      <div class="inline-block mr-[2px]">
+        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-str" aria-label='Strength'></dt>
+        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>{Str}</dd>
       </div>
-      <div class="flex gap-4 w-full justify-between px-2">
-        <dt class="text-[#633c2f]">INT</dt>
-        <dd>{Int}</dd>
+      <div class="inline-block">
+        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-dex" aria-label='Dexterity'></dt>
+        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>{Dex}</dd>
+      </div>
+    </div>
+    <div class="w-full">
+      <div class="inline-block mr-[2px]">
+        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-luk" aria-label='Luck'></dt>
+        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md  border-t-2 border-l-2'>{Luk}</dd>
+      </div>
+      <div class="inline-block">
+        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-int" aria-label='Intelligence'></dt>
+        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>{Int}</dd>
       </div>
     </div>
   </dl>

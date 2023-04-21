@@ -35,7 +35,7 @@ export const getNotice = (): Promise<string> => {
       if (err)
         reject(err)
       else
-        resolve(res.notice)
+        resolve(res.Message)
     });
   })
 }

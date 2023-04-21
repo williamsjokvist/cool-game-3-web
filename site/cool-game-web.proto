@@ -1,0 +1,70 @@
+syntax = "proto3";
+option go_package = "github.com/GreenSoap/cool-game-3-web/proto";
+
+package coolgame3web;
+
+service CoolGame3Web {
+  rpc GetCharacters (GetCharacterParams) returns (Characters) {}
+  rpc GetNotice (GetNoticeParams) returns (Notice) {}
+  rpc CreateAccount (CreateAccountParams) returns (CreateAccountResponse) {}
+}
+
+message GetCharacterParams {
+  bool isOnline = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+}
+
+message GetNoticeParams {}
+
+message CreateAccountParams {
+  string Name = 1;
+  string Password = 2;
+  string Email = 3;
+  string Birthday = 4;
+  string DiscordUsername = 5;
+}
+
+message CreateAccountResponse {
+  bool Success = 1;
+  string Message = 2;
+}
+
+message Notice {
+  string Message = 1;
+}
+
+message Character {
+  string StreetName = 1;
+  string MapName = 2;
+  string JobName = 3;
+  int64 ExpRequired = 4;
+  string Name = 5;
+  int32 Level = 6;         
+  int32 Exp = 7;
+  int32 Str = 8;
+  int32 Dex = 9;
+  int32 Int = 10;
+  int32 Luk = 11;
+  int32 HP = 12;
+  int32 MP = 13;
+  int32 MaxHP = 14;
+  int32 MaxMP = 15;
+  int32 Meso = 16;
+  int32 SkinColor = 17;
+  int32 Gender = 18;
+  int32 Fame = 19;
+  int32 Face = 20;
+  int32 Hair = 21;
+  int32 Rank = 22;
+  bool Married = 23;
+  int32 LoggedIn = 24;
+  int64 TotalPlayTime = 25;
+  bool Islander = 26;
+  string CreateDate = 27;
+  repeated int32 EquippedItems = 28;
+}
+
+message Characters {
+  repeated Character characters = 1;
+}
