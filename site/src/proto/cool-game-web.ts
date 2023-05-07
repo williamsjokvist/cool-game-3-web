@@ -3,7 +3,7 @@ import grpc from '@grpc/grpc-js'
 import protoLoader from '@grpc/proto-loader'
 import { CharacterModel } from '../types/character'
 
-const packageDefinition = protoLoader.loadSync('../proto/cool-game-web.proto', {
+const packageDefinition = protoLoader.loadSync('./cool-game-web.proto', {
   keepCase: true,
   defaults: true,
   oneofs: true,

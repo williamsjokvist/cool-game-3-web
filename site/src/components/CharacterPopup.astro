@@ -25,128 +25,224 @@ const {
   TotalPlayTime,
   Face,
   Hair,
-  EquippedItems
+  EquippedItems,
 } = character as CharacterModel;
 
 const expPercentage = ((Exp / ExpRequired) * 100).toFixed(2) + "%";
 const playTimeHrs = Math.floor(TotalPlayTime / 1000 / (60 * 60));
-const equips = EquippedItems.map(itemId => `{itemId:${itemId},version:64}`).join(',')
+const equips = EquippedItems.map(
+  (itemId) => `{itemId:${itemId},version:64}`
+).join(",");
 ---
 
 <section
-  class="popup-gradient text-xs md:text-base font-arial min-w-[403px] text-center group-hover:block hidden text-[#031532] border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur absolute z-50 top-[-240px] left-[15px] md:left-[150px] px-4 py-2 rounded-lg"
+  class="popup-gradient text-xs md:text-base font-arial min-w-[403px] max-w-[403px] text-center group-hover:block hidden text-[#031532] border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur absolute z-50 top-[-240px] left-[15px] md:left-[150px] rounded-lg"
 >
-  <header>
-    <figure class='avatar-box grid justify-items-center'>
+  <header
+    class="flex justify-between bg-[rgba(232,226,226,.7)] border-b-2 border-solid border-[#5c7e9e] px-4 py-2"
+  >
+    <figure
+      class="w-full self-end flex flex-col justify-center items-center avatar-box"
+    >
       <img
-        src={`https://maplestory.io/api/character/{itemId:${2000+ SkinColor},version:64},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:${12000+SkinColor},version:64},${equips}/stand1/animated?resize=1&renderMode=default&flipX=true`}
+        src={`https://maplestory.io/api/character/{itemId:${
+          2000 + SkinColor
+        },version:64},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:${
+          12000 + SkinColor
+        },version:64},${equips}/stand1/animated?resize=1&renderMode=default&flipX=true`}
         alt=""
+        class="mx-auto z-10"
         loading="lazy"
       />
-      <figcaption class="blue-gradient-top mt-2 border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white">
+      <figcaption
+        class="mx-auto blue-gradient-top mt-2 border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white"
+      >
         {Name}
       </figcaption>
     </figure>
-    <div class="mt-4 flex items-center justify-center gap-4  font-small">
-      {JobName}
-      <span>|</span>
-      <span class="flex items-center gap-2 font-bold font-semismall">
-        LV.
-        <span class='level-no'>
-          {Level.toString().split('').map(num => <span class={`level-no-${num}`} />)}
+    <div class="text-center pl-4 mt-4 min-w-[220px] font-small">
+      <div
+        class="max-w-[200px] mx-auto mb-2 w-full relative glow-line h-4 bg-slate-700 rounded-md overflow-hidden outline-none outline-2 outline-offset-0 outline-[#4d4a52]"
+      >
+        <span
+          class="absolute w-full text-center top-0 md:top-[-3px] left-0 z-50 font-bold text-[10px] text-white"
+          >{HP}/{MaxHP}</span
+        >
+        <div
+          class="absolute bg-gradient-to-r from-[#d82963] to-[#f75ca5] h-4"
+          style={`width: ${Math.floor((HP / MaxHP) * 100)}%`}
+        >
+        </div>
+      </div>
+
+      <div
+        class="max-w-[200px] mx-auto mb-2 relative glow-line w-full h-4 bg-slate-700 rounded-md overflow-hidden outline-none outline-2 outline-offset-0 outline-[#4d4a52]"
+      >
+        <span
+          class="absolute w-full text-center top-0 md:top-[-3px] left-0 z-50 font-bold text-[10px] text-white"
+          >{MP}/{MaxMP}</span
+        >
+        <div
+          class="absolute bg-gradient-to-r from-[#01a0c6] to-[#5dcbe3] h-4"
+          style={`width: ${Math.floor((MP / MaxMP) * 100)}%`}
+        >
+        </div>
+      </div>
+
+      <div
+        class="max-w-[200px] mx-auto mb-2 relative glow-line w-full h-4 bg-slate-700 rounded-md overflow-hidden outline-none outline-2 outline-offset-0 outline-[#4d4a52]"
+      >
+        <span
+          class="absolute w-full text-center top-0 md:top-[-3px] left-0 z-50 font-bold text-[10px] text-white"
+          >{expPercentage}</span
+        >
+        <div
+          class="absolute bg-yellow-500 h-4"
+          style={`width: ${expPercentage}`}
+        >
+        </div>
+      </div>
+
+      <div class="flex gap-2 mb-1">
+        <i
+          class="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+          aria-label="Level"
+        >
+          <span class="block stat stat-level" style="filter:invert(1)"></span>
+        </i>
+        <span class="w-[121px] inline-flex align-top text-left">
+          <span class="!inline-flex mt-[2px] level-no">
+            {
+              Level.toString()
+                .split("")
+                .map((num) => <span class={`level-no-${num}`} />)
+            }
+          </span>
         </span>
-      </span>
+      </div>
+      <div class="flex gap-2">
+        <i
+          class="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block bg-[lightslategray] p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+          aria-label="Job"
+        >
+          <span class="block stat stat-job" style="filter:invert(1)"></span>
+        </i>
+        <span
+          class="w-[121px] whitespace-nowrap inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2"
+        >
+          {JobName}
+        </span>
+      </div>
     </div>
   </header>
-  <span class="whitespace-nowrap overflow-hidden text-ellipsis mt-4 block font-small pb-4 mb-4 border-b-2 border-solid border-[#5c7e9e]">{StreetName} - {MapName}</span>
-  <div class="flex items-center justify-between w-full font-small">
-    <span class="text-left">
-      <span class='stat stat-hp inline-block' aria-label='HP'></span>
-      <span class="align-top ml-2 text-[#95c634]">
-        [<span class="text-black">{HP}/{MaxHP}</span>]
-      </span>
-    </span>
-    <div
-      class="max-w-[130px] w-full h-3 bg-slate-700 rounded-md overflow-hidden"
-    >
-      <div
-        class="bg-red-500 h-3"
-        style={`width: ${Math.floor((HP / MaxHP) * 100)}%`}
-      >
-      </div>
-    </div>
-  </div>
-  <div class="flex items-center justify-between w-full font-small">
-    <span class="text-left">
-      <span class='stat stat-mp inline-block' aria-label='MP'></span>
-      <span class="align-top ml-2 text-[#95c634]">
-        [<span class="text-black">{MP}/{MaxMP}</span>]
-      </span>
-    </span>
-    <div
-      class="max-w-[130px] w-full h-3 bg-slate-700 rounded-md overflow-hidden"
-    >
-      <div
-        class="bg-blue-500 h-3"
-        style={`width: ${Math.floor((MP / MaxMP) * 100)}%`}
-      >
-      </div>
-    </div>
-  </div>
 
-  <div
-    class="flex items-center justify-between w-full font-small pb-4 mb-4 border-b-2 border-solid border-[#5c7e9e]"
-  >
-    <span class="text-left">
-      <span class='stat stat-exp inline-block' aria-label='EXP'></span>
-      <span class="align-top ml-2 text-[#95c634]">
-        [<span class="text-black">{expPercentage}</span>]
-      </span>
-    </span>
-    <div
-      class="max-w-[130px] w-full h-3 bg-slate-700 rounded-md overflow-hidden"
-    >
-      <div class="bg-yellow-500 h-3" style={`width: ${expPercentage}`}></div>
-    </div>
-  </div>
   <dl
-    class="font-sans font-medium pb-4 mb-4 border-b-2 border-solid border-[#5c7e9e]"
+    class="font-sans font-medium py-3 border-b-2 border-solid border-[#5c7e9e] px-2"
   >
-    <div class="w-full">
-      <div class="inline-block mr-[2px]">
-        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-rank" aria-label='Rank'></dt>
-        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>#{Rank}</dd>
-      </div>
-      <div class="inline-block">
-        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-fame" aria-label='Fame'></dt>
-        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>{Fame}</dd>
-      </div>
+    <div class="w-full flex content-start items-start gap-1 mb-2">
+      <dt
+        class="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+        aria-label="Map"
+      >
+        <span class="block stat stat-map" style="filter:invert(1)"></span>
+      </dt>
+      <dd class="inline-block flex-1 text-center whitespace-nowrap overflow-hidden text-ellipsis px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
+        {StreetName} - {MapName}
+      </dd>
     </div>
-    <div class="w-full">
-      <div class="inline-block mr-[2px]">
-        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-str" aria-label='Strength'></dt>
-        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>{Str}</dd>
-      </div>
-      <div class="inline-block">
-        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-dex" aria-label='Dexterity'></dt>
-        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>{Dex}</dd>
-      </div>
+    <div class="inline-block mr-1">
+      <dt
+        class="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+        aria-label="Rank"
+        style="filter:hue-rotate(145deg)"
+      >
+        <span class="block stat stat-rank" style="filter:invert(1)"></span>
+      </dt>
+      <dd
+        class="w-[121px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2"
+      >
+        #{Rank}
+      </dd>
     </div>
-    <div class="w-full">
-      <div class="inline-block mr-[2px]">
-        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-luk" aria-label='Luck'></dt>
-        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md  border-t-2 border-l-2'>{Luk}</dd>
-      </div>
-      <div class="inline-block">
-        <dt class="mr-[2px] inline-block text-[#633c2f] stat stat-int" aria-label='Intelligence'></dt>
-        <dd class='w-[80px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2'>{Int}</dd>
-      </div>
+    <div class="inline-block">
+      <dt
+        class="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+        aria-label="Fame"
+        style="filter:hue-rotate(145deg)"
+      >
+        <span class="block stat stat-fame" style="filter:invert(1)"></span>
+      </dt>
+      <dd
+        class="w-[121px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2"
+      >
+        {Fame}
+      </dd>
+    </div>
+    <div class="inline-block mr-1">
+      <dt
+        class="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+        aria-label="Strength"
+        style="filter:hue-rotate(-57deg)"
+      >
+        <span class="block stat stat-str" style="filter:invert(1)"></span>
+      </dt>
+      <dd
+        class="w-[121px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2"
+      >
+        {Str}
+      </dd>
+    </div>
+    <div class="inline-block">
+      <dt
+        class="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+        aria-label="Dexterity"
+        style="filter:hue-rotate(-57deg)"
+      >
+        <span class="block stat stat-dex" style="filter:invert(1)"></span>
+      </dt>
+      <dd
+        class="w-[121px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2"
+      >
+        {Dex}
+      </dd>
+    </div>
+    <div class="inline-block mr-1">
+      <dt
+        class="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+        aria-label="Luck"
+        style="filter:hue-rotate(-57deg)"
+      >
+        <span class="block stat stat-luk" style="filter:invert(1)"></span>
+      </dt>
+      <dd
+        class="w-[121px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2"
+      >
+        {Luk}
+      </dd>
+    </div>
+    <div class="inline-block">
+      <dt
+        class="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+        aria-label="Intelligence"
+        style="filter:hue-rotate(-57deg)"
+      >
+        <span class="block stat stat-int" style="filter:invert(1)"></span>
+      </dt>
+      <dd
+        class="w-[121px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2"
+      >
+        {Int}
+      </dd>
     </div>
   </dl>
-  <span class="font-small block leading-none mb-2"
-    >Created on: <time datetime={CreateDate}>{CreateDate.slice(0, 10)}</time
-    ></span
-  >
-  <span class="font-small block leading-none mb-2">Total Play Time: {playTimeHrs + ' hrs'}</span>
-
+  <footer class="flex justify-around py-3 bg-[#5c7e9e] text-white font-small">
+    <span class="block leading-none">
+      <b>Created on:</b>
+      <time datetime={CreateDate}>{CreateDate.slice(0, 10)}</time>
+    </span>
+    <span class="block leading-none">
+      <b>Play Time:</b>
+      {playTimeHrs + " hrs"}
+    </span>
+  </footer>
 </section>

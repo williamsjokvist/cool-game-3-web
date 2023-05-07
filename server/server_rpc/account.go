@@ -97,8 +97,16 @@ func (s *Server) CreateAccount(ctx context.Context, in *pb.CreateAccountParams) 
 		isSuccess = false
 	}
 
+	var msg string
+
+	if isSuccess {
+		msg = "Account created successfully"
+	} else {
+		msg = "Account creation failed"
+	}
+
 	return &pb.CreateAccountResponse{
 		Success: isSuccess,
-		Message: "Account created successfully",
+		Message: msg,
 	}, nil
 }

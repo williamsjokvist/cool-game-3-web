@@ -45,61 +45,51 @@
 
 .stat
   --scale: 2
-  background-image: url('/stat.png')
-  background-size: calc(48px * var(--scale)) calc(224px * var(--scale))
+  background-image: url('/stat-2.png')
+  background-size: calc(23px * var(--scale)) calc(70px * var(--scale))
   background-repeat: no-repeat
   image-rendering: pixelated
-  width: calc(48px * var(--scale))
-  height: calc(16px * var(--scale))
+  width: calc(23px * var(--scale))
+  height: calc(7px * var(--scale))
 
   &.stat-level
     background-position-y: 0
 
+  &.stat-guild
+    background-position-y: calc(-7px * var(--scale))
+  
   &.stat-job
-    background-position-y: calc(-16px * var(--scale))
+    background-position-y: calc(-14px * var(--scale))
+
+  &.stat-map
+    background-position-y: calc(-21px * var(--scale))
 
   &.stat-fame
-    background-position-y: calc(-32px * var(--scale))
+    background-position-y: calc(-28px * var(--scale))
   
-  &.stat-guild
-    background-position-y: calc(-48px * var(--scale))
-  
-  &.stat-alliance
-    background-position-y: calc(-64px * var(--scale))
-  
-  &.stat-hp
-    background-position-y: calc(-80px * var(--scale))
-  
-  &.stat-mp
-    background-position-y: calc(-96px * var(--scale))
-
-  &.stat-exp
-    background-position-y: calc(-112px * var(--scale))
-  
-  &.stat-map
-    background-position-y: calc(-128px * var(--scale))
-
   &.stat-rank
-    background-position-y: calc(-144px * var(--scale))
+    background-position-y: calc(-35px * var(--scale))
 
   &.stat-str
-    background-position-y: calc(-160px * var(--scale))
+    background-position-y: calc(-42px * var(--scale))
 
   &.stat-dex
-    background-position-y: calc(-176px * var(--scale))
+    background-position-y: calc(-49px * var(--scale))
 
   &.stat-int
-    background-position-y: calc(-192px * var(--scale))
+    background-position-y: calc(-56px * var(--scale))
 
   &.stat-luk
-    background-position-y: calc(-208px * var(--scale))
+    background-position-y: calc(-63px * var(--scale))
 
 .avatar-box
   position: relative
+  img
+    z-index: 1
   &::after
     content: ''
     position: absolute
-    z-index: -1
+    z-index: 0
     bottom: 43px
     border-radius: 100%
     height: 5px
@@ -111,3 +101,14 @@
   background: transparent
   backdrop-filter: blur(21px)
   background-image: linear-gradient(62deg, rgba(142, 180, 252, 0.95) 0%, rgba(195, 252, 241, 0.95) 100%)
+
+.glow-line::before
+  content: ''
+  position: absolute
+  top: 2px
+  left: 4px
+  width: calc(100% - 8px)
+  border-radius: 8px
+  background: rgba(255, 255, 255, 0.25)
+  height: 8px
+  z-index: 49
