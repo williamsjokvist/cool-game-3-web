@@ -1,25 +1,26 @@
 ---
 import Icon from "astro-icon";
+
+const isPatchNotes = Astro.url.pathname === "/patches";
+const isRankings = Astro.url.pathname === "/rankings";
 ---
 
 <nav class="w-full grid items-center gap-4 justify-center">
   <div class="flex items-center justify-center gap-20 pt-4">
     <a
       href="/patches"
-      class="blue-gradient-top hover:underline text-xl mx-auto text-white flex gap-4 justify-between items-center mt-2 border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md"
-      style='filter: hue-rotate(45deg)'
-
+      class="gap-1 flex flex-col items-center hover:bg-[rgba(255,255,255,.125)] hover:text-white transition-colors text-xl mx-auto text-[rgba(255,255,255,.75)] mt-2 px-3 py-1 rounded-md"
+      style={isPatchNotes && 'color: white;'}
     >
-      <Icon name="ph:scroll-duotone" class="w-8 h-8" />
+      <Icon name={'clarity:scroll-solid'} class="text-red-500 w-8 h-8" />
       <span>Patch Notes</span>
     </a>
-
     <a
       href="/rankings"
-      class="blue-gradient-top hover:underline text-xl mx-auto text-white flex gap-4 justify-between items-center mt-2 border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md"
-      style='filter: hue-rotate(155deg)'
+      class="gap-1 flex flex-col items-center hover:bg-[rgba(255,255,255,.125)] hover:text-white transition-colors text-xl mx-auto text-[rgba(255,255,255,.75)] mt-2 px-3 py-1 rounded-md"
+      style={isRankings && 'color: white;'}
     >
-      <Icon name="icon-park-outline:ranking" class="w-8 h-8" />
+      <Icon name={'vaadin:chart-3d'} class="text-blue-500 w-8 h-8" />
       <span>Rankings</span>
     </a>
   </div>

@@ -1,0 +1,114 @@
+.level-no 
+  display: flex
+  align-items: center
+  height: 26px
+  white-space: nowrap
+
+  >* 
+    background-image: url('/levelno.png')
+    background-size: 220px 26px
+    background-repeat: no-repeat
+    image-rendering: pixelated
+    width: 22px
+    height: 26px
+    margin-right: 2px
+  
+  .level-no-0 
+    background-position-x: 0
+  
+  .level-no-1 
+    background-position-x: -22px
+  
+  .level-no-2 
+    background-position-x: -44px
+
+  .level-no-3 
+    background-position-x: -66px  
+
+  .level-no-4 
+    background-position-x: -88px
+
+  .level-no-5 
+    background-position-x: -110px
+  
+  .level-no-6 
+    background-position-x: -132px
+  
+  .level-no-7 
+    background-position-x: -154px
+
+  .level-no-8 
+    background-position-x: -176px
+  
+  .level-no-9 
+    background-position-x: -198px
+
+.stat
+  --scale: 2
+  background-image: url('/stat-2.png')
+  background-size: calc(23px * var(--scale)) calc(70px * var(--scale))
+  background-repeat: no-repeat
+  image-rendering: pixelated
+  width: calc(23px * var(--scale))
+  height: calc(7px * var(--scale))
+
+  &.stat-level
+    background-position-y: 0
+
+  &.stat-guild
+    background-position-y: calc(-7px * var(--scale))
+  
+  &.stat-job
+    background-position-y: calc(-14px * var(--scale))
+
+  &.stat-map
+    background-position-y: calc(-21px * var(--scale))
+
+  &.stat-fame
+    background-position-y: calc(-28px * var(--scale))
+  
+  &.stat-rank
+    background-position-y: calc(-35px * var(--scale))
+
+  &.stat-str
+    background-position-y: calc(-42px * var(--scale))
+
+  &.stat-dex
+    background-position-y: calc(-49px * var(--scale))
+
+  &.stat-int
+    background-position-y: calc(-56px * var(--scale))
+
+  &.stat-luk
+    background-position-y: calc(-63px * var(--scale))
+
+.avatar-box
+  position: relative
+  img
+    z-index: 1
+  &::after
+    content: ''
+    position: absolute
+    z-index: 0
+    bottom: 43px
+    border-radius: 100%
+    height: 5px
+    width: 50px
+    filter: blur(3px)
+    background: #000
+
+.popup-gradient
+  background: transparent
+  backdrop-filter: blur(21px)
+  background-image: linear-gradient(62deg, rgba(142, 180, 252, 0.95) 0%, rgba(195, 252, 241, 0.95) 100%)
+
+.glow-line::before
+  content: ''
+  position: absolute
+  top: 2px
+  left: 4px
+  width: calc(100% - 8px)
+  border-radius: 8px
+  background: rgba(255, 255, 255, 0.25)
+  height: 8px
+  z-index: 49

@@ -7,3 +7,4 @@ tmp/
 /server/config.toml
 /server/resource.syso
 /server/dist/
+.vercel
