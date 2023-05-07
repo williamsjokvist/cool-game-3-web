@@ -1,41 +1,41 @@
-version: "3.9"
+version: '3.9'
 
 services:
   api:
-    container_name: cg3_web_api
+    container_name: cg3_grpc_api
     build: 
       context: server
       dockerfile: dev.Dockerfile
-    env_file: .env
     restart: unless-stopped
     ports:
-      - 9090:9090
+      - 8080:8080
     volumes:
       - ./server:/cg3-web-server
+      - ./server/config.toml:/cg3-web-server/config.toml
     environment:
       CHOKIDAR_USE_POLLING: false
     networks:
       - cg3-network
   
-  astro:
-    container_name: cg3_site
+  next:
+    container_name: cg3_next
     build: 
       context: site
       dockerfile: dev.Dockerfile
-    env_file: .env
     restart: unless-stopped
     ports:
       - 3000:3000
     volumes:
-      - ./site/public:/cg3-site/public
-      - ./site/src:/cg3-site/src
-      - ./site/src/proto:/cg3-site/src/proto
-      - ./site/tsconfig.json:/cg3-site/tsconfig.json
-      - ./site/astro.config.mjs:/cg3-site/astro.config.mjs
+      - ./next/public:/next/public
+      - ./next/src:/next/src
+      - ./next/src/proto:/next/src/proto
+      - ./next/tsconfig.json:/next/tsconfig.json
+      - ./next/next.config.js:/next/next.config.js
+      - ./next/postcss.config.js:/next/postcss.config.js
+      - ./next/tailwind.config.js:/next/tailwind.config.js
     environment:
       CHOKIDAR_USE_POLLING: false
-      SERVER_URL: cg3_web_api:9090
-      PORT: 3000
+      SERVER_URL: cg3_grpc_api:8080
     networks:
       - cg3-network
     depends_on:
