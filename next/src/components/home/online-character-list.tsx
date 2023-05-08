@@ -24,7 +24,7 @@ const OnlineCharacterList: FunctionComponent = async () => {
         </h2>
         <div className="flex flex-wrap gap-5 justify-center mx-auto mt-6">
           {onlineCharacters.map((character) => (
-            <Character character={character} />
+            <Character key={character.Name} character={character} />
           ))}
         </div>
       </section>

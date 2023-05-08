@@ -25,7 +25,7 @@ const NavItem: FunctionComponent<NavItemProps> = (props) => {
 
 const Nav: FunctionComponent = (props) => {
   return (
-    <nav className="font-arial text-black dark:text-white text-md pt-12 mb-12">
+    <nav className="font-arial text-white text-md pt-12 mb-12">
       <ul className="flex justify-center gap-8">
         <NavItem name="Home" href="/" />
         <NavItem

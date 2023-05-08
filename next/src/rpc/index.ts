@@ -14,7 +14,7 @@ const packageDefinition = loadSync(protoPath, {
   enums: String,
 })
 
-const coolGameProto = loadPackageDefinition(packageDefinition).coolgame3web
+const coolGameProto = loadPackageDefinition(packageDefinition).coolgame3web as any
 const client = new coolGameProto.CoolGame3Web(process.env.SERVER_URL, credentials.createInsecure())
 
 export const getCharacters = (requestParams: { 

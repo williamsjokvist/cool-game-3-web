@@ -6,7 +6,7 @@ const RegisterPage: FunctionComponent = () => {
     <main>
       <form
         method="post"
-        className="dark:text-white text-center max-w-xl mx-auto mb-8 text-sm"
+        className="text-white text-center max-w-xl mx-auto mb-8 text-sm"
       >
         <div className="flex items-center justify-between gap-4 mb-4">
           <label htmlFor="name" className="font-bold">

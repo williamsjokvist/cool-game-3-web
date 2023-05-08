@@ -107,8 +107,8 @@ const RankingTable: FunctionComponent = async () => {
                     <span className="level-no justify-center md:justify-normal">
                       {Level.toString()
                         .split("")
-                        .map((num) => (
-                          <span className={`level-no-${num}`} />
+                        .map((num, index) => (
+                          <span key={index} className={`level-no-${num}`} />
                         ))}
                     </span>
                   </td>
