@@ -20,15 +20,16 @@ services:
   next:
     container_name: cg3_next
     build: 
-      context: site
-      dockerfile: dev.Dockerfile
+      context: .
+      dockerfile: next/dev.Dockerfile
     restart: unless-stopped
     ports:
       - 3000:3000
     volumes:
+      - ./proto/:/proto
       - ./next/public:/next/public
       - ./next/src:/next/src
-      - ./next/src/proto:/next/src/proto
+      
       - ./next/tsconfig.json:/next/tsconfig.json
       - ./next/next.config.js:/next/next.config.js
       - ./next/postcss.config.js:/next/postcss.config.js

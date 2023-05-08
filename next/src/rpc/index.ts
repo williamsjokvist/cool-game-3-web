@@ -1,9 +1,12 @@
 
-import grpc from '@grpc/grpc-js'
-import protoLoader from '@grpc/proto-loader'
+import { loadPackageDefinition, credentials } from '@grpc/grpc-js'
+import { loadSync } from '@grpc/proto-loader'
 import { CharacterModel } from '../types/character'
+import path from 'path'
 
-const packageDefinition = protoLoader.loadSync('../proto/cool-game-web.proto', {
+const protoPath = path.resolve('../', 'proto', 'cool-game-web.proto')
+
+const packageDefinition = loadSync(protoPath, {
   keepCase: true,
   defaults: true,
   oneofs: true,
@@ -11,8 +14,8 @@ const packageDefinition = protoLoader.loadSync('../proto/cool-game-web.proto', {
   enums: String,
 })
 
-const coolGameProto = grpc.loadPackageDefinition(packageDefinition).coolgame3web
-const client = new coolGameProto.CoolGame3Web(import.meta.env.SERVER_URL, grpc.credentials.createInsecure())
+const coolGameProto = loadPackageDefinition(packageDefinition).coolgame3web
+const client = new coolGameProto.CoolGame3Web(process.env.SERVER_URL, credentials.createInsecure())
 
 export const getCharacters = (requestParams: { 
   isOnline: boolean,
@@ -20,7 +23,7 @@ export const getCharacters = (requestParams: {
   offset: number
 }): Promise<CharacterModel[]> => {  
   return new Promise((resolve, reject) => {
-    client.GetCharacters(requestParams, (err, res) => {
+    client.GetCharacters(requestParams, (err: any, res: any) => {
       if (err)
         reject(err)
       else
@@ -31,11 +34,11 @@ export const getCharacters = (requestParams: {
 
 export const getNotice = (): Promise<string> => {
   return new Promise((resolve, reject) => {
-    client.GetNotice({}, (err, res) => {
+    client.GetNotice({}, (err: any, res: any) => {
       if (err)
         reject(err)
       else
-        resolve(res.notice)
+        resolve(res.Message)
     });
   })
 }
@@ -48,7 +51,7 @@ export const createAccount = (requestParams: {
   DiscordUsername: string,
 }): Promise<boolean> => {
   return new Promise((resolve, reject) => {
-    client.CreateAccount(requestParams, (err, res) => {
+    client.CreateAccount(requestParams, (err: any, res: any) => {
       if (err)
         reject(err)
       else

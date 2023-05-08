@@ -1,9 +1,12 @@
 FROM node:16-alpine
 
-WORKDIR /next
+COPY proto ./proto
 
-COPY *.json *.config.js ./
-COPY public src ./
+COPY ./next/*.json ./next/*.config.js ./next/
+COPY ./next/public ./next/public
+COPY ./next/src ./next/src
+
+WORKDIR /next
 
 RUN npm install --loglevel verbose
 
