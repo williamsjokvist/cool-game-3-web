@@ -1,4 +1,5 @@
 "use client";
+import { Icon } from "@iconify/react";
 import { useRef, type FunctionComponent, useState, useEffect } from "react";
 import Draggable from "react-draggable";
 import { closeCharacterPopup } from "@/redux/features/character-popup-slice";
@@ -51,10 +52,9 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
   }, [isOpen]);
 
   useEffect(() => {
-    isOpen && setOverrideCoords(false)
-  }, [isOpen])
+    isOpen && setOverrideCoords(false);
+  }, [isOpen]);
 
-  
   if (!character) return <></>;
 
   const {
@@ -127,7 +127,20 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
           isOpen ? "block" : "hidden"
         } fixed top-0 left-0 z-50 character-popup popup-gradient text-xs md:text-base font-arial min-w-[403px] max-w-[403px] text-center text-[#031532] border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur rounded-lg`}
       >
-        <header className="drag-handle flex justify-between bg-[rgba(232,226,226,.7)] border-b-2 border-solid border-[#5c7e9e] px-4 py-2">
+        <button
+          onClick={() => {
+            dispatch(
+              closeCharacterPopup({
+                top: Math.floor(coordinates.top),
+                left: Math.floor(coordinates.left),
+              })
+            );
+          }}
+          className="left-2 top-2 absolute self-start bg-[rgba(255,255,255,.5)] hover:bg-[#f7faff] p-1 rounded-md transition-colors"
+        >
+          <Icon icon="ci:close-big" className="w-6 h-full" />
+        </button>
+        <header className="drag-handle flex bg-[rgba(255,255,255,.5)] justify-between border-b-2 border-solid border-[#5c7e9e] px-4 py-2">
           {/* Avatar */}
           <figure className="w-full self-end flex flex-col justify-center items-center avatar-box">
             <img
@@ -136,8 +149,8 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
               },version:64},{itemId:${Face},version:64},{itemId:${Hair},version:64},{itemId:${
                 12000 + SkinColor
               },version:64},${equips}/stand1/animated?resize=1&renderMode=default&flipX=true`}
-              alt=""
-              className="mx-auto z-10"
+              alt={`${Name}'s character`}
+              className="pixelated mx-auto z-10"
               loading="lazy"
             />
             <figcaption className="mx-auto blue-gradient-top mt-2 border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white">

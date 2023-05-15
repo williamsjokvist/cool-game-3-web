@@ -37,6 +37,7 @@ const Character: FunctionComponent<CharacterProps> = (props) => {
             12000 + SkinColor
           },version:64},${equips}/stand1/animated?resize=1&renderMode=default&flipX=true`}
           alt={`${Name}'s avatar'`}
+          className='pixelated'
           loading="lazy"
         />
         <figcaption className="text-white font-arial text-sm mt-2 px-3 py-1 rounded-md">
