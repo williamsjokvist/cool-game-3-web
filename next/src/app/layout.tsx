@@ -33,7 +33,7 @@ export default function RootLayout({
               <Link href="">
                 <Image
                   className="logo relative drop-shadow-[0_0_0.3rem_#ffffff70]"
-                  src="/logo.png"
+                  src="https://raw.githubusercontent.com/GreenSoap/cool-game-3-web/master/next/public/logo.png"
                   alt="Cool Game 3 Logo"
                   width={400}
                   height={80}

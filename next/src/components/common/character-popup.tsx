@@ -58,7 +58,7 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
         );
       }
     };
-  }, [isOpen]);
+  }, [isOpen, onOutOfBoundsClicked]);
 
   useEffect(() => {
     isOpen && setOverrideCoords(false);
