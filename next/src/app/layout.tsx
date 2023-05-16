@@ -1,7 +1,8 @@
 import "../style/globals.sass";
 import "../style/utility.sass";
 import "../style/fonts.sass";
-import "../style/register-btn.scss";
+import "../style/register-btn.sass";
+import "../style/components.sass"
 import Image from "next/image";
 import Link from "next/link";
 import { Providers } from "@/redux/provider";

@@ -1,6 +1,6 @@
 "use client";
 import { CharacterModel } from "@/types/character";
-import { type FunctionComponent, useRef, useState } from "react";
+import { type FunctionComponent, useRef, useState, useEffect } from "react";
 import Name from "./name";
 import Level from "@/components/common/level";
 
@@ -19,10 +19,10 @@ type RanksProps = {
   characters: CharacterModel[];
 };
 const Ranks: FunctionComponent<RanksProps> = (props) => {
-  const [characters, setCharacters] = useState(props.characters);
+  const [characters, setCharacters] = useState<CharacterModel[]>(props.characters);
 
   const sortTable = (column: TableHead) => {
-    const newChars = characters.sort((a, b) => {
+    const sortedCharacters = characters.sort((a, b) => {
       let cmpValueA: string | number;
       let cmpValueB: string | number;
 
@@ -32,8 +32,8 @@ const Ranks: FunctionComponent<RanksProps> = (props) => {
           cmpValueB = b.Name;
           break;
         case TableHead.Job:
-          cmpValueA = a.Job;
-          cmpValueB = b.Job;
+          cmpValueA = a.JobName;
+          cmpValueB = b.JobName;
           break;
         case TableHead.Rank:
           cmpValueA = a.Rank;
@@ -52,12 +52,12 @@ const Ranks: FunctionComponent<RanksProps> = (props) => {
           cmpValueB = b.Meso;
           break;
         case TableHead.Exp:
-          cmpValueA = a.Exp;
-          cmpValueB = b.Exp;
+          cmpValueA = ((a.Exp / a.ExpRequired) * 100)
+          cmpValueB = ((b.Exp / b.ExpRequired) * 100)
           break;
         case TableHead.PlayTime:
-          cmpValueA = a.TotalPlayTime;
-          cmpValueB = b.TotalPlayTime;
+          cmpValueA = Math.floor(a.TotalPlayTime / 1000 / (60 * 60))
+          cmpValueB = Math.floor(b.TotalPlayTime / 1000 / (60 * 60))
           break;
         default:
           cmpValueA = a.Rank;
@@ -79,8 +79,7 @@ const Ranks: FunctionComponent<RanksProps> = (props) => {
       }
     });
 
-    setCharacters(newChars);
-    console.log(newChars[0])
+    setCharacters([...sortedCharacters])
   };
 
   return (

@@ -11,7 +11,9 @@ type CharacterPopupProps = {
 };
 
 const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
+  const [stopped, setStopped] = useState(false)
   const draggableRef = useRef<Draggable>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
   const isOpen = useAppSelector((state) => state.characterPopupReducer.isOpen);
@@ -25,13 +27,20 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
   const [coordinates, setCoordinates] = useState({ left, top });
   const [overrideCoords, setOverrideCoords] = useState(false);
 
-  const onOutOfBoundsClicked = () => {
+  const close = () => {
+    if (!containerRef.current) return
+    setStopped(true)
+
+    const { top, left } = containerRef.current.getBoundingClientRect();
     dispatch(
       closeCharacterPopup({
-        top: Math.floor(coordinates.top),
-        left: Math.floor(coordinates.left),
+        top: Math.floor(top),
+        left: Math.floor(left),
       })
     );
+  }
+  const onOutOfBoundsClicked = () => {
+    close()
     const els = document.querySelectorAll("body>*:not(.character-popup)")!;
     els.forEach((el) => el.removeEventListener("click", onOutOfBoundsClicked));
   };
@@ -100,47 +109,37 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
         },
       })}
       onStart={(e) => {
+        setStopped(false)
         setOverrideCoords(true);
         setCoordinates({
           top: Math.floor(coordinates.top),
           left: Math.floor(coordinates.left),
         });
-
-        document
-          .querySelector(".character-popup")!
-          .classList.remove("transform-transition");
       }}
       onStop={(e) => {
+        setStopped(true)
         const { top, left } = (e.target as HTMLElement).getBoundingClientRect();
         setCoordinates({
           top: Math.floor(top),
           left: Math.floor(left),
         });
-
-        document
-          .querySelector(".character-popup")!
-          .classList.add("transform-transition");
       }}
     >
       <section
-        className={`${
-          isOpen ? "block" : "hidden"
-        } fixed top-0 left-0 z-50 character-popup popup-gradient text-xs md:text-base font-arial min-w-[403px] max-w-[403px] text-center text-[#031532] border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur rounded-lg`}
+        ref={containerRef}
+        className={`
+        character-popup
+        ${isOpen ? "visible" : "invisible"} 
+        ${isOpen ? "opacity-100" : "opacity-0"}
+        ${stopped ? "popup-transitions-transform" : "popup-transitions"} fixed top-0 left-0 z-50 popup-gradient text-xs md:text-base font-arial min-w-[403px] max-w-[403px] text-center text-[#031532] border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur rounded-lg`}
       >
         <button
-          onClick={() => {
-            dispatch(
-              closeCharacterPopup({
-                top: Math.floor(coordinates.top),
-                left: Math.floor(coordinates.left),
-              })
-            );
-          }}
+          onClick={close}
           className="left-2 top-2 absolute self-start bg-[rgba(255,255,255,.5)] hover:bg-[#f7faff] p-1 rounded-md transition-colors"
         >
           <Icon icon="ci:close-big" className="w-6 h-full" />
         </button>
-        <header className="drag-handle flex bg-[rgba(255,255,255,.5)] justify-between border-b-2 border-solid border-[#5c7e9e] px-4 py-2">
+        <header className="rounded-t-md drag-handle flex bg-[rgba(255,255,255,.5)] justify-between border-b-2 border-solid border-[#5c7e9e] px-4 py-2">
           {/* Avatar */}
           <figure className="w-full self-end flex flex-col justify-center items-center avatar-box">
             <img
