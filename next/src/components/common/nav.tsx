@@ -33,7 +33,7 @@ const NavItems: NavItemProps[] = [
   {
     name: "Patch Notes",
     href: "/patch-notes",
-    toolTip: "Look how the coolest game becomes even cooler",
+    toolTip: "The coolest game becomes even cooler",
     children: <Icon icon="ph:scroll-bold" className="w-12 h-12" />,
   },
 ];

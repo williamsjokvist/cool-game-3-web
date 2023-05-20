@@ -1,18 +1,18 @@
 "use client";
 import { Icon } from "@iconify/react";
 import { useRef, type FunctionComponent, useState, useEffect } from "react";
-import Draggable from "react-draggable";
 import { closeCharacterPopup } from "@/redux/features/character-popup-slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Level from "@/components/common/level";
-
+import { motion, useDragControls } from "framer-motion"
 type CharacterPopupProps = {
   mdLeftOffset: number;
 };
 
 const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
-  const [stopped, setStopped] = useState(false)
-  const draggableRef = useRef<Draggable>(null);
+  const controls = useDragControls()
+  const body = useRef(null)
+  
   const containerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
@@ -24,12 +24,8 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
     (state) => state.characterPopupReducer.character
   );
 
-  const [coordinates, setCoordinates] = useState({ left, top });
-  const [overrideCoords, setOverrideCoords] = useState(false);
-
   const close = () => {
     if (!containerRef.current) return
-    setStopped(true)
 
     const { top, left } = containerRef.current.getBoundingClientRect();
     dispatch(
@@ -44,26 +40,17 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
     const els = document.querySelectorAll("body>*:not(.character-popup)")!;
     els.forEach((el) => el.removeEventListener("click", onOutOfBoundsClicked));
   };
-
+/*
   useEffect(() => {
+    if (!isOpen) return
     const els = document.querySelectorAll("body>*:not(.character-popup)")!;
-    if (isOpen) {
-      els.forEach((el) => el.addEventListener("click", onOutOfBoundsClicked));
-    }
-
+    els.forEach((el) => el.addEventListener("click", onOutOfBoundsClicked));
     return () => {
-      if (isOpen) {
-        els.forEach((el) =>
-          el.removeEventListener("click", onOutOfBoundsClicked)
-        );
-      }
+      if (!isOpen) return
+      els.forEach(el => el.removeEventListener("click", onOutOfBoundsClicked));
     };
-  }, [isOpen, onOutOfBoundsClicked]);
-
-  useEffect(() => {
-    isOpen && setOverrideCoords(false);
-  }, [isOpen]);
-
+  }, [isOpen, onOutOfBoundsClicked, setOverrideCoords]);
+*/
   if (!character) return <></>;
 
   const {
@@ -98,48 +85,32 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
     (itemId) => `{itemId:${itemId},version:64}`
   ).join(",");
 
-  return (
-    <Draggable
-      ref={draggableRef}
-      handle={".drag-handle"}
-      {...(!overrideCoords && {
-        position: {
-          x: left,
-          y: top,
-        },
-      })}
-      onStart={(e) => {
-        setStopped(false)
-        setOverrideCoords(true);
-        setCoordinates({
-          top: Math.floor(coordinates.top),
-          left: Math.floor(coordinates.left),
-        });
-      }}
-      onStop={(e) => {
-        setStopped(true)
-        const { top, left } = (e.target as HTMLElement).getBoundingClientRect();
-        setCoordinates({
-          top: Math.floor(top),
-          left: Math.floor(left),
-        });
-      }}
-    >
-      <section
+    return (
+      <>
+      <div ref={body} className='w-screen h-screen -z-10 fixed'></div>
+      <motion.div
         ref={containerRef}
-        className={`
-        character-popup
-        ${isOpen ? "visible" : "invisible"} 
-        ${isOpen ? "opacity-100" : "opacity-0"}
-        ${stopped ? "popup-transitions-transform" : "popup-transitions"} fixed top-0 left-0 z-50 popup-gradient text-xs md:text-base font-arial min-w-[403px] max-w-[403px] text-center text-[#031532] border-[#5c7e9e] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur rounded-lg`}
+        dragControls={controls}
+        drag
+        dragListener={false}
+        onDragStart={() => {
+          console.log('start')
+        }}
+        whileDrag={ { scale: 1.05 }}
+        dragMomentum={false}
+        dragConstraints={body}
+        className={`character-popup ${isOpen ? "visible" : "invisible"} ${isOpen ? "opacity-100" : "opacity-0"}
+        popup-transitions fixed top-0 left-0 z-50 popup-gradient text-xs md:text-base font-arial min-w-[403px] max-w-[403px] text-center text-[#334155] border-[#2c96d5] border-2 border-solid outline-white outline-none outline-2 outline-offset-0 shadow-lg shadow-black backdrop-blur rounded-lg`}
       >
         <button
           onClick={close}
-          className="left-2 top-2 absolute self-start bg-[rgba(255,255,255,.5)] hover:bg-[#f7faff] p-1 rounded-md transition-colors"
+          className="z-50 left-2 top-2 absolute self-start bg-[rgba(255,255,255,.5)] hover:bg-[#f7faff] p-1 rounded-md transition-colors"
         >
           <Icon icon="ci:close-big" className="w-6 h-full" />
         </button>
-        <header className="rounded-t-md drag-handle flex bg-[rgba(255,255,255,.5)] justify-between border-b-2 border-solid border-[#5c7e9e] px-4 py-2">
+        <header 
+          onPointerDown={(event) => controls.start(event, { snapToCursor: false })}
+          className="select-none rounded-t-md drag-handle flex bg-[rgba(255,255,255,.5)] justify-between border-b-2 border-solid border-[#2c96d5] px-4 py-2">
           {/* Avatar */}
           <figure className="w-full self-end flex flex-col justify-center items-center avatar-box">
             <img
@@ -149,10 +120,10 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
                 12000 + SkinColor
               },version:64},${equips}/stand1/animated?resize=1&renderMode=default&flipX=true`}
               alt={`${Name}'s character`}
-              className="pixelated mx-auto z-10"
+              className="pixelated mx-auto z-10 pointer-events-none"
               loading="lazy"
             />
-            <figcaption className="mx-auto blue-gradient-top mt-2 border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white">
+            <figcaption className="select-text mx-auto blue-gradient-top mt-2 border-solid border-white border-2 shadow-[0px_0px_3px_rgba(0,0,0,.5)] px-3 py-1 rounded-md text-white">
               {Name}
             </figcaption>
           </figure>
@@ -160,12 +131,12 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
           {/* Bars */}
           <div className="text-center pl-4 mt-4 min-w-[220px] font-small">
             {/* HP Bar */}
-            <div className="max-w-[200px] mx-auto mb-2 w-full relative glow-line h-4 bg-slate-700 rounded-md overflow-hidden outline-none outline-2 outline-offset-0 outline-[#4d4a52]">
+            <div className="max-w-[200px] mx-auto mb-2 w-full relative glow-line h-4 bg-slate-700 rounded-md overflow-hidden outline-none outline-[3px] outline-offset-[-1px] outline-[#334155]">
               <span className="absolute w-full text-center top-0 md:top-[-3px] left-0 z-50 font-bold text-[10px] text-white">
                 {HP}/{MaxHP}
               </span>
               <div
-                className="absolute bg-gradient-to-r from-[#d82963] to-[#f75ca5] h-4"
+                className="shadow-[0_0_7px_#f75ca5] transition-all absolute bg-gradient-to-r from-[#d82963] to-[#f75ca5] h-4"
                 style={{
                   width: Math.floor((HP / MaxHP) * 100) + "%",
                 }}
@@ -173,12 +144,12 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
             </div>
 
             {/* MP Bar */}
-            <div className="max-w-[200px] mx-auto mb-2 relative glow-line w-full h-4 bg-slate-700 rounded-md overflow-hidden outline-none outline-2 outline-offset-0 outline-[#4d4a52]">
+            <div className="max-w-[200px] mx-auto mb-2 relative glow-line w-full h-4 bg-slate-700 rounded-md overflow-hidden outline-none outline-[3px] outline-offset-[-1px] outline-[#334155]">
               <span className="absolute w-full text-center top-0 md:top-[-3px] left-0 z-50 font-bold text-[10px] text-white">
                 {MP}/{MaxMP}
               </span>
               <div
-                className="absolute bg-gradient-to-r from-[#01a0c6] to-[#5dcbe3] h-4"
+                className="shadow-[0_0_7px_#5dcbe3] transition-all absolute bg-gradient-to-r from-[#01a0c6] to-[#5dcbe3] h-4"
                 style={{
                   width: Math.floor((MP / MaxMP) * 100) + "%",
                 }}
@@ -186,12 +157,12 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
             </div>
 
             {/* EXP Bar */}
-            <div className="max-w-[200px] mx-auto mb-2 relative glow-line w-full h-4 bg-slate-700 rounded-md overflow-hidden outline-none outline-2 outline-offset-0 outline-[#4d4a52]">
+            <div className="max-w-[200px] mx-auto mb-2 relative glow-line w-full h-4 bg-slate-700 rounded-md overflow-hidden outline-none outline-[3px] outline-offset-[-1px] outline-[#334155]">
               <span className="absolute w-full text-center top-0 md:top-[-3px] left-0 z-50 font-bold text-[10px] text-white">
                 {expPercentage}
               </span>
               <div
-                className="absolute bg-yellow-500 h-4"
+                className="shadow-[0_0_7px_#ebb305] transition-all absolute bg-yellow-500 h-4"
                 style={{
                   width: expPercentage,
                 }}
@@ -229,7 +200,7 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
                   }}
                 ></span>
               </i>
-              <span className="w-[124px] whitespace-nowrap inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
+              <span className="select-text w-[124px] whitespace-nowrap inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
                 {JobName}
               </span>
             </div>
@@ -237,9 +208,9 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
         </header>
 
         {/* Character Stats */}
-        <dl className="font-sans font-medium py-3 border-b-2 border-solid border-[#5c7e9e] px-2">
+        <dl className="font-sans font-medium py-3 border-b-2 border-solid border-[#2c96d5] px-2">
           {/* Map */}
-          <div className="w-full flex content-start items-start gap-1 mb-2">
+          <div className="w-full flex content-start items-start gap-2 mb-2">
             <dt
               className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
               aria-label="Map"
@@ -256,8 +227,8 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
             </dd>
           </div>
 
-          {/* Rank */}
-          <div className="inline-block mr-1">
+          <div className="w-full flex content-start items-start gap-2 mb-2">
+            {/* Rank */}
             <dt
               className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
               aria-label="Rank"
@@ -275,10 +246,8 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
             <dd className="w-[124px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
               #{Rank}
             </dd>
-          </div>
-
-          {/* Fame */}
-          <div className="inline-block">
+            
+            {/* Fame */}
             <dt
               className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
               aria-label="Fame"
@@ -298,10 +267,10 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
             </dd>
           </div>
 
-          {/* Strength */}
-          <div className="inline-block mr-1">
+          <div className="w-full flex content-start items-start gap-2 mb-2">
+            {/* Strength */}
             <dt
-              className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+              className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
               aria-label="Strength"
               style={{
                 filter: "hue-rotate(-57deg)",
@@ -314,15 +283,13 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
                 }}
               ></span>
             </dt>
-            <dd className="w-[124px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
+            <dd className="w-[124px] align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
               {Str}
             </dd>
-          </div>
 
-          {/* Dex */}
-          <div className="inline-block">
+            {/* Dex */}
             <dt
-              className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+              className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
               aria-label="Dexterity"
               style={{
                 filter: "hue-rotate(-57deg)",
@@ -335,15 +302,15 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
                 }}
               ></span>
             </dt>
-            <dd className="w-[124px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
+            <dd className="w-[124px] align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
               {Dex}
             </dd>
           </div>
 
-          {/* Luck */}
-          <div className="inline-block mr-1">
+          <div className="w-full flex content-start items-start gap-2 mb-2">
+            {/* Luck */}
             <dt
-              className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+              className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
               aria-label="Luck"
               style={{
                 filter: "hue-rotate(-57deg)",
@@ -356,15 +323,13 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
                 }}
               ></span>
             </dt>
-            <dd className="w-[124px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
+            <dd className="w-[124px] align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
               {Luk}
             </dd>
-          </div>
 
-          {/* Intelligence */}
-          <div className="inline-block">
+            {/* Intelligence */}
             <dt
-              className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] inline-block blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
+              className="outline-none outline-offset-[-4px] outline-[rgba(255,255,255,.3)] mr-[2px] blue-gradient-top p-[6px] rounded-md border-solid border-2 border-[#4d4a52]"
               aria-label="Intelligence"
               style={{
                 filter: "hue-rotate(-57deg)",
@@ -377,14 +342,14 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
                 }}
               ></span>
             </dt>
-            <dd className="w-[124px] inline-block align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
+            <dd className="w-[124px] align-top text-left px-3 py-[2px] border-solid border-[#cecdc9] bg-[rgba(255,255,255,.72)] rounded-md border-t-2 border-l-2">
               {Int}
             </dd>
           </div>
         </dl>
 
         {/* Extra stats */}
-        <footer className="drag-handle flex justify-around py-3 bg-[#5c7e9e] text-white font-small">
+        <footer className="drag-handle flex justify-around py-3 bg-[#2c96d5] text-white font-small">
           <span className="block leading-none">
             <b className="mr-1">Created on:</b>
             <time dateTime={CreateDate}>{CreateDate.slice(0, 10)}</time>
@@ -394,9 +359,9 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
             {playTimeHrs + " hrs"}
           </span>
         </footer>
-      </section>
-    </Draggable>
-  );
+      </motion.div>
+      </>
+    )
 };
 
 export default CharacterPopup;
