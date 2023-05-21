@@ -9,7 +9,7 @@ const PatchNotesPage: FunctionComponent = () => {
   return (
     <main className="">
       <ol className='text-xl mx-auto max-w-xl mt-8'>
-        {patchNotesMetaData.map((post) => {
+        {patchNotesMetaData.reverse().map((post) => {
           return (
             <li key={post.date}>
               <Link

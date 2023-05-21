@@ -88,7 +88,7 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
     return (
       <>
       <div ref={body} className='w-screen h-screen -z-10 fixed'></div>
-      <motion.div
+      <motion.section
         ref={containerRef}
         dragControls={controls}
         drag
@@ -359,7 +359,7 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
             {playTimeHrs + " hrs"}
           </span>
         </footer>
-      </motion.div>
+      </motion.section>
       </>
     )
 };

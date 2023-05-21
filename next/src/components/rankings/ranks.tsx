@@ -101,7 +101,9 @@ const Ranks: FunctionComponent<RanksProps> = (props) => {
   };
 
   return (
-    <section
+    <motion.section
+      initial={ { opacity: 0 }}
+      animate={ { opacity: 1 }}
       id="rankings"
       className="md:table w-full md:w-auto md:mx-auto mt-8 text-sm md:text-md"
     >
@@ -238,7 +240,7 @@ const Ranks: FunctionComponent<RanksProps> = (props) => {
           );
         })}
       </Reorder.Group>
-    </section>
+    </motion.section>
   );
 };
 
