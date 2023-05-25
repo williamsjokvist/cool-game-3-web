@@ -3,7 +3,7 @@ import { useEffect, type FunctionComponent } from "react";
 import Character from "./character";
 import Level from "@/components/common/level";
 import { CharacterModel } from "@/types/character";
-import { motion, Reorder, useAnimate, stagger } from "framer-motion";
+import { motion, useAnimate, stagger } from "framer-motion";
 
 type OnlineCharacterListProps = {
   characters: CharacterModel[];

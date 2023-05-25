@@ -11,6 +11,7 @@ import { Inter } from "next/font/google";
 import Notice from "@/components/common/notice";
 import Nav from "@/components/common/nav";
 import CharacterPopup from "@/components/common/character-popup";
+import { AniCursors } from "@/components/common/cursor";
 const inter = Inter({ subsets: ["latin"] });
 
 /* https://nextjs.org/docs/app/api-reference/file-conventions/metadata */
@@ -50,6 +51,7 @@ export default function RootLayout({
             <small>May or may not have the approval of David Hasslehoff</small>
           </footer>
           <CharacterPopup mdLeftOffset={150} />
+          <AniCursors/>
         </body>
       </Providers>
     </html>

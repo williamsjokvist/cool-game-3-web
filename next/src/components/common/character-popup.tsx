@@ -93,10 +93,7 @@ const CharacterPopup: FunctionComponent<CharacterPopupProps> = (props) => {
         dragControls={controls}
         drag
         dragListener={false}
-        onDragStart={() => {
-          console.log('start')
-        }}
-        whileDrag={ { scale: 1.05 }}
+        whileDrag={ { scale: 1.05, cursor: 'url("/cursor/move.cur"), move' }}
         dragMomentum={false}
         dragConstraints={body}
         className={`character-popup ${isOpen ? "visible" : "invisible"} ${isOpen ? "opacity-100" : "opacity-0"}
