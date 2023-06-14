@@ -8,3 +8,4 @@ tmp/
 /server/resource.syso
 /server/dist/
 .vercel
+.DS_Store
